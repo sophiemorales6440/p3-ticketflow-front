@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Route, Link as RouterLink, Routes } from "react-router-dom";
 import About from "./pages/About";
+import Users from "./pages/admin/Users";
 import Home from "./pages/Home";
 
 function Copyright() {
@@ -19,7 +20,7 @@ function Copyright() {
 			{"Copyright © "}
 			<Link color="inherit" href="https://mui.com/">
 				Your Website
-			</Link>{" "}
+			</Link>
 			{new Date().getFullYear()}.
 		</Typography>
 	);
@@ -42,6 +43,14 @@ export default function App() {
 					>
 						À propos
 					</Link>
+					<Link
+						component={RouterLink}
+						to="/users"
+						variant="h6"
+						underline="hover"
+					>
+						Users
+					</Link>
 				</Stack>
 			</Box>
 
@@ -49,6 +58,7 @@ export default function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
+				<Route path="/users" element={<Users />} />
 			</Routes>
 
 			<Box sx={{ my: 4 }}>

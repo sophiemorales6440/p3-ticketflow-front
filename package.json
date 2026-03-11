@@ -19,6 +19,7 @@
 		"@emotion/styled": "latest",
 		"@mui/icons-material": "latest",
 		"@mui/material": "latest",
+		"lucide-react": "^0.577.0",
 		"react": "latest",
 		"react-dom": "latest",
 		"react-router-dom": "^7.12.0"
