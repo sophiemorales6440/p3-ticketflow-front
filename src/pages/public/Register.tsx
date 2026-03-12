@@ -80,7 +80,7 @@ export default function Register() {
 	return (
 		<Box
 			sx={{
-				minHeight: "100vh",
+				minHeight: "50vh",
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
@@ -197,6 +197,18 @@ export default function Register() {
 						error={!!errors.confirmPassword}
 						helperText={errors.confirmPassword}
 					/>
+
+					{/* Submit */}
+					<Button
+						type="submit"
+						variant="contained"
+						fullWidth
+						size="large"
+						disabled={isSubmitting}
+						sx={{ textTransform: "none", fontWeight: 600 }}
+					>
+						{isSubmitting ? "Creating account..." : "Create account"}
+					</Button>
 				</Box>
 			</Paper>
 		</Box>
