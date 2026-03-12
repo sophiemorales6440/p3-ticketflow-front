@@ -39,6 +39,14 @@ export default function App() {
 					</Link>
 					<Link
 						component={RouterLink}
+						to="/login"
+						variant="h6"
+						underline="hover"
+					>
+						Login
+					</Link>
+					<Link
+						component={RouterLink}
 						to="/register"
 						variant="h6"
 						underline="hover"
