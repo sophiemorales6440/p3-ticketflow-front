@@ -166,6 +166,37 @@ export default function Register() {
 						error={!!errors.email}
 						helperText={errors.email}
 					/>
+
+					{/* Password strength bar */}
+					{password.length > 0 && (
+						<Box sx={{ mb: 2 }}>
+							<LinearProgress
+								variant="determinate"
+								value={(score / 4) * 100}
+								color={strengthColors[score]}
+								sx={{ borderRadius: 2, height: 6 }}
+							/>
+							<Typography
+								variant="caption"
+								color={`${strengthColors[score]}.main`}
+								sx={{ mt: 0.5, display: "block" }}
+							>
+								{strengthLabel[score]}
+							</Typography>
+						</Box>
+					)}
+
+					{/* Confirm Password */}
+					<TextField
+						label="Confirm password"
+						type="password"
+						fullWidth
+						sx={{ mb: 3 }}
+						value={confirmPassword}
+						onChange={(event) => setConfirmPassword(event.target.value)}
+						error={!!errors.confirmPassword}
+						helperText={errors.confirmPassword}
+					/>
 				</Box>
 			</Paper>
 		</Box>
