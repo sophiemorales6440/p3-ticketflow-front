@@ -48,7 +48,12 @@ export default function Register() {
 	};
 
 	const strengthLabel = ["", "Weak", "Fair", "Good", "Strong"];
-	const strengthColors = ["", "error", "warning", "info", "success"];
+	const strengthColors: ("error" | "warning" | "info" | "success")[] = [
+		"error",
+		"warning",
+		"info",
+		"success",
+	];
 	const score = getPasswordStrength(password);
 
 	const validationPassword = (): FormErrors => {
@@ -65,7 +70,7 @@ export default function Register() {
 		return strongPassword;
 	};
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		const formErrors = validationPassword();
 		if (Object.keys(formErrors).length > 0) {
