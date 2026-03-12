@@ -7,7 +7,7 @@ import { Route, Link as RouterLink, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Users from "./pages/admin/Users";
 import Home from "./pages/Home";
-import Login from "./pages/public/login";
+import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
 
 function Copyright() {
