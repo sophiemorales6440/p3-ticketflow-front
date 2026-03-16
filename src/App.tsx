@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Route, Link as RouterLink, Routes } from "react-router-dom";
 import About from "./pages/About";
+import Comments from "./pages/admin/comments";
 import Users from "./pages/admin/Users";
 import Home from "./pages/Home";
 import Login from "./pages/public/Login";
@@ -69,6 +70,14 @@ export default function App() {
 					>
 						Users
 					</Link>
+					<Link
+						component={RouterLink}
+						to="/comments"
+						variant="h6"
+						underline="hover"
+					>
+						Commentaire
+					</Link>
 				</Stack>
 			</Box>
 
@@ -81,6 +90,7 @@ export default function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/users" element={<Users />} />
+				<Route path="/comments" element={<Comments />} />
 			</Routes>
 
 			<Box sx={{ my: 4 }}>
