@@ -1,11 +1,14 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import SendIcon from "@mui/icons-material/Send";
 import {
 	Avatar,
 	Box,
 	IconButton,
+	InputAdornment,
 	List,
 	ListItem,
 	Paper,
+	TextField,
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -20,6 +23,7 @@ interface CommentType {
 
 export default function Comments() {
 	const [comment, setComment] = useState<CommentType[]>([]);
+	const [input, setInput] = useState("");
 
 	useEffect(() => {
 		const afficheComments = async () => {
@@ -36,6 +40,24 @@ export default function Comments() {
 		});
 		if (response.ok) {
 			setComment(comment.filter((c) => c.id !== id));
+		}
+	};
+	const sendMessage = async () => {
+		const response = await fetch(`http://localhost:3310/api/comments`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				content: input,
+				author_id: 3,
+				ticket_id: 1,
+			}),
+		});
+		if (response.ok) {
+			const nouveauComment = await response.json();
+			setComment([...comment, nouveauComment]);
+			setInput("");
 		}
 	};
 
@@ -171,6 +193,36 @@ export default function Comments() {
 					);
 				})}
 			</List>
+			{/* Input */}
+			<Box
+				sx={{ px: 2, py: 1.5, borderTop: "1px solid", borderColor: "divider" }}
+			>
+				<TextField
+					fullWidth
+					size="small"
+					placeholder="Écrire un commentaire..."
+					value={input}
+					onChange={(e) => setInput(e.target.value)}
+					onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+					sx={{ "& .MuiOutlinedInput-root": { borderRadius: 5 } }}
+					slotProps={{
+						input: {
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton
+										size="small"
+										color="primary"
+										onClick={sendMessage}
+										disabled={!input.trim()}
+									>
+										<SendIcon fontSize="small" />
+									</IconButton>
+								</InputAdornment>
+							),
+						},
+					}}
+				/>
+			</Box>
 		</Paper>
 	);
 }
