@@ -22,34 +22,32 @@ interface AuthContextType {
 }
 
 export default function AuthProvider({ children }) {
-	const [isLogin, setIsLogin] = useState(false);
+	const [user, setUser] = useState<User | null>(null);
 
-    const handleLogin = async (infos) => {
-        const newData = {login, password}
+	const handleLogin = async (infos: LoginInfos) => {
+		const newData = { email: infos.email, password: infos.password };
 
-        const response = await fetch("http://localhost:3310/api/auth/signin", {
-            method: "POST",
-            headers:{
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newData)
-        })
+		const response = await fetch("http://localhost:3310/api/auth/signin", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newData),
+		});
 
-        const data = await response.json()
-        if(response.ok){
-            setIsLogin(true)
-        }
-    }
+		const data = await response.json();
+		if (response.ok) {
+			setUser(user);
+		}
+	};
 
-    const handleSignup = async (infos) => {
+	const handleSignup = async (infos: LoginInfos) => {};
 
-    }
-
-    const handleLogout = () => setIsLogin(false)
+	const handleLogout = () => setUser(null);
 
 	return (
-        <AuthContext value={{isLogin, handleLogin, handleLogout, handleSignup}}>
-            {children}
-        </AuthContext>
-    );
+		<AuthContext value={{ user, handleLogin, handleLogout, handleSignup }}>
+			{children}
+		</AuthContext>
+	);
 }
