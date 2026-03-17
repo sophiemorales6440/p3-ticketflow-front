@@ -91,6 +91,7 @@ export default function App() {
 				<Route path="/about" element={<About />} />
 				<Route path="/users" element={<Users />} />
 				<Route path="/comments" element={<Comments />} />
+				<Route path="/categories" element={<Categories />} />
 			</Routes>
 
 			<Box sx={{ my: 4 }}>
