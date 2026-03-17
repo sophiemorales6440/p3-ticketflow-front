@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Route, Link as RouterLink, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
+import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
 import Home from "./pages/Home";
 import Login from "./pages/public/Login";
@@ -83,6 +84,8 @@ export default function App() {
 				<Route path="/about" element={<About />} />
 				<Route path="/users" element={<Users />} />
 				<Route path="/categories" element={<Categories />} />
+				{/* Only for Admins/tech */}
+				<Route path="/dashboard" element={<Dashboard />} />
 			</Routes>
 
 			<Box sx={{ my: 4 }}>

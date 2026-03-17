@@ -16,6 +16,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
@@ -26,6 +27,7 @@ export default function Login() {
 	const [loading, setLoading] = useState(false);
 
 	const { handleLogin } = useAuth();
+	const navigate = useNavigate();
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -39,6 +41,7 @@ export default function Login() {
 		} finally {
 			setLoading(false);
 		}
+		navigate("/dashboard");
 	};
 
 	return (
