@@ -22,6 +22,7 @@ interface CommentType {
 	author_id: number;
 	ticket_id: number;
 	created_at: string;
+	is_internal: number;
 }
 
 export default function Comments() {
@@ -57,6 +58,7 @@ export default function Comments() {
 				content: input,
 				author_id: user?.id,
 				ticket_id: 1,
+				is_internal: isInternal ? 1 : 0,
 			}),
 		});
 		if (response.ok) {
