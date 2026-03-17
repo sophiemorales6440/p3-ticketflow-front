@@ -37,11 +37,12 @@ export default function AuthProvider({
 			},
 			body: JSON.stringify(newData),
 		});
-
-		const data = await response.json();
-		if (response.ok) {
-			setUser(data);
+		if (!response.ok) {
+			throw new Error("fonctionne pas");
 		}
+		const data = await response.json();
+
+		setUser(data);
 	};
 
 	const handleLogout = () => setUser(null);
