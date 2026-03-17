@@ -1,3 +1,17 @@
+import {
+	Box,
+	Button,
+	Paper,
+	Stack,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	TextField,
+	Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import Category from "./CategoryCard";
 
@@ -30,29 +44,74 @@ export default function Categories() {
 	}, [isUpdate]);
 	//ajoute un formulaire pour ajouter une catégorie
 	return (
-		<div>
-			<h1>Gestion des catégories</h1>
+		<Box>
+			<Typography variant="h4" sx={{ mt: 5 }}>
+				Gestion des catégories
+			</Typography>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
 					handleAdd();
 				}}
 			>
-				<input
-					type="text"
-					placeholder="Nom de la catégorie"
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-				/>
-				<button type="submit">Ajouter</button>
+				<Stack
+					direction="row"
+					spacing={2}
+					alignItems="center"
+					justifyContent="space-between"
+					marginY={2}
+					sx={{ mt: 5 }}
+				>
+					<TextField
+						label="Nom de la catégorie"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						sx={{ mt: 2, width: "70%" }}
+					/>
+					<Button type="submit" variant="contained" sx={{ width: "30%" }}>
+						Ajouter
+					</Button>
+				</Stack>
 			</form>
-			{categories.map((category) => (
-				<Category
-					key={category.id}
-					category={category}
-					SetIsUpdate={SetIsUpdate}
-				/>
-			))}
-		</div>
+
+			<TableContainer component={Paper} sx={{ mt: 2 }}>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableCell
+								sx={{
+									width: "70%",
+									fontWeight: "bold",
+									bgcolor: "primary.main",
+									color: "white",
+									textAlign: "center",
+								}}
+							>
+								Catégories
+							</TableCell>
+							<TableCell
+								sx={{
+									fontWeight: "bold",
+									bgcolor: "primary.main",
+									color: "white",
+									textAlign: "center",
+								}}
+							>
+								Actions
+							</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{categories.map((category) => (
+							<Category
+								key={category.id}
+								category={category}
+								SetIsUpdate={SetIsUpdate}
+							/>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</Box>
 	);
 }

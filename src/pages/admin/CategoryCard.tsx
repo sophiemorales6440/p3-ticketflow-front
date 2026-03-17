@@ -1,3 +1,4 @@
+import { Button, Stack, TableCell, TableRow, TextField } from "@mui/material";
 import { useState } from "react";
 
 interface CategoryType {
@@ -45,32 +46,47 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 		}
 	};
 	return (
-		<div>
+		<TableRow>
 			{isEdit ? (
-				<div>
-					{" "}
-					<input
+				<TableCell>
+					<TextField
+						size="small"
+						variant="outlined"
 						type="text"
-						placeholder={category.name}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
+						placeholder={category.name}
 					/>
-					<button type="button" onClick={handleSave}>
-						Save
-					</button>
-				</div>
+				</TableCell>
 			) : (
-				<div>
-					<h2>{category.name}</h2>
-					<button type="button" onClick={handleEdit}>
-						Edit
-					</button>
-					<button type="button" onClick={handleDelete}>
-						Delete
-					</button>
-				</div>
+				<TableCell>{category.name}</TableCell>
 			)}
-		</div>
+			<TableCell>
+				{isEdit ? (
+					<Stack direction="row" spacing={2}>
+						<Button variant="contained" onClick={handleSave}>
+							Save
+						</Button>
+						<Button
+							variant="outlined"
+							color="error"
+							onClick={() => setIsEdit(false)}
+						>
+							Cancel
+						</Button>
+					</Stack>
+				) : (
+					<Stack direction="row" spacing={2}>
+						<Button variant="contained" onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant="outlined" color="error" onClick={handleDelete}>
+							Delete
+						</Button>
+					</Stack>
+				)}
+			</TableCell>
+		</TableRow>
 	);
 };
 
