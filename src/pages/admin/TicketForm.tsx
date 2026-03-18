@@ -13,10 +13,12 @@ export default function TicketForm() {
 	const [description, setDescription] = useState("");
 	const [priority, setPriority] = useState("");
 	const [category_id, setCategoryId] = useState("");
+	const [_attachment, setAttachment] = useState<File | null>(null); //  TODO à brancher avec la route attachments du back, puis enlever le _ pour éviter les warnings de variable non utilisée
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
+		//TODO:  ajouter l'attachment dansFormData quand la  route du back sera prête
 		await fetch("http://localhost:3310/api/tickets", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -59,6 +61,16 @@ export default function TicketForm() {
 					sx={{ mb: 2 }}
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
+				/>
+
+				<TextField
+					type="file"
+					fullWidth
+					sx={{ mb: 2 }}
+					onChange={(e) => {
+						const input = e.target as HTMLInputElement;
+						setAttachment(input.files?.[0] ?? null);
+					}}
 				/>
 
 				<TextField
