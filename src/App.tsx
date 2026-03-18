@@ -119,7 +119,7 @@ export default function App() {
 					<Route path="/comments" element={<Comments />} />
 					<Route path="/categories" element={<Categories />} />
 					{/* Only for Admins/tech */}
-					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/admin/dashboard" element={<Dashboard />} />
 					<Route path="/tickets" element={<Tickets />} />
 				</Routes>
 
