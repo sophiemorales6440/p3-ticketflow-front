@@ -4,7 +4,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Navigate, Route, Link as RouterLink, Routes } from "react-router-dom";
-import Background from "./assets/background.png";
+import Background from "./assets/background.webp";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
 import Comments from "./pages/admin/Comments";
