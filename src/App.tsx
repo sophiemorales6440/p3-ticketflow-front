@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
 import Comments from "./pages/admin/Comments";
 import Dashboard from "./pages/admin/Dashboard";
+import TicketForm from "./pages/admin/TicketForm";
 import Users from "./pages/admin/Users";
 import Home from "./pages/Home";
 import Login from "./pages/public/Login";
@@ -96,6 +97,7 @@ export default function App() {
 				<Route path="/categories" element={<Categories />} />
 				{/* Only for Admins/tech */}
 				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/tickets/new" element={<TicketForm />} />
 			</Routes>
 
 			<Box sx={{ my: 4 }}>
