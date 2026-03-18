@@ -10,6 +10,7 @@ import Categories from "./pages/admin/Categories";
 import Comments from "./pages/admin/Comments";
 import Dashboard from "./pages/admin/Dashboard";
 import TicketForm from "./pages/admin/TicketForm";
+import Tickets from "./pages/admin/Tickets";
 import Users from "./pages/admin/Users";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
@@ -110,6 +111,7 @@ export default function App() {
 					{/* public routes */}
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/tickets/new" element={<TicketForm />} />
 					{/* public routes */}
 					<Route path="/" element={<Navigate to="/login" />} />
 					<Route path="/about" element={<About />} />
@@ -118,7 +120,7 @@ export default function App() {
 					<Route path="/categories" element={<Categories />} />
 					{/* Only for Admins/tech */}
 					<Route path="/dashboard" element={<Dashboard />} />
-					<Route path="/tickets/new" element={<TicketForm />} />
+					<Route path="/tickets" element={<Tickets />} />
 				</Routes>
 
 				<Box sx={{ my: 4 }}>
