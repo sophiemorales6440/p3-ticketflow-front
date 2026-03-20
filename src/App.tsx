@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Navigate, Route, Link as RouterLink, Routes } from "react-router-dom";
 import Background from "./assets/background.webp";
+import Footer from "./components/ui/footer";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
 import Comments from "./pages/admin/Comments";
@@ -13,24 +14,6 @@ import TicketForm from "./pages/admin/TicketForm";
 import Users from "./pages/admin/Users";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
-
-function Copyright() {
-	return (
-		<Typography
-			variant="body2"
-			align="center"
-			sx={{
-				color: "white",
-			}}
-		>
-			{"Copyright © "}
-			<Link color="inherit" href="https://mui.com/">
-				Your Website
-			</Link>
-			{new Date().getFullYear()}.
-		</Typography>
-	);
-}
 
 export default function App() {
 	return (
@@ -41,9 +24,10 @@ export default function App() {
 				backgroundSize: "cover",
 				backgroundPosition: "center",
 				color: "#fff",
+				display:"flex", flexDirection:"column"
 			}}
 		>
-			<Container maxWidth="sm">
+			<Container maxWidth="lg" sx={{ flexGrow: 1 }}>
 				{/* Barre de navigation simple */}
 				<Box component="nav" sx={{ p: 2, borderBottom: "1px solid #ddd" }}>
 					<Stack direction="row" spacing={4} justifyContent="center">
@@ -56,16 +40,6 @@ export default function App() {
 						>
 							Accueil
 						</Link>
-						{/*<Link
-						component={RouterLink}
-						to="/login"
-						variant="h6"
-						underline="hover"
-						color="white"
-					>
-						Login
-					</Link>
-					*/}
 						<Link
 							component={RouterLink}
 							to="/register"
@@ -120,11 +94,8 @@ export default function App() {
 					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/tickets/new" element={<TicketForm />} />
 				</Routes>
-
-				<Box sx={{ my: 4 }}>
-					<Copyright />
-				</Box>
 			</Container>
+			<Footer />
 		</Box>
 	);
 }
