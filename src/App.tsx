@@ -2,10 +2,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { Navigate, Route, Link as RouterLink, Routes } from "react-router-dom";
 import Background from "./assets/background.webp";
-import Footer from "./components/ui/footer";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
 import Comments from "./pages/admin/Comments";
@@ -14,6 +12,7 @@ import TicketForm from "./pages/admin/TicketForm";
 import Users from "./pages/admin/Users";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
+import Footer from "./components/ui/footer";
 
 export default function App() {
 	return (
