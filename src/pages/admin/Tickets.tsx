@@ -10,6 +10,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	formatDate,
 	translateCategory,
@@ -29,6 +30,7 @@ interface TicketType {
 
 export default function Tickets() {
 	const [ticket, setTicket] = useState<TicketType[]>([]);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetch("http://localhost:3310/api/tickets/")
@@ -58,7 +60,14 @@ export default function Tickets() {
 					</TableHead>
 					<TableBody>
 						{ticket.map((t) => (
-							<TableRow key={t.id}>
+							<TableRow
+								key={t.id}
+								onClick={() => navigate(`/tickets/${t.id}/edit`)}
+								sx={{
+									cursor: "pointer",
+									"&:hover": { bgcolor: "action.hover" },
+								}}
+							>
 								<TableCell>{t.id}</TableCell>
 								<TableCell>{t.title}</TableCell>
 								<TableCell>{translateStatus(t.status)}</TableCell>
