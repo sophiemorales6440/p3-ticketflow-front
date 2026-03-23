@@ -69,16 +69,14 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 		<TableRow hover sx={{ "&:hover": { bgcolor: "action.hover" } }}>
 			<TableCell>
 				{isEdit ? (
-					<>
-						<TextField
-							size="small"
-							variant="outlined"
-							type="text"
-							name="firstname"
-							value={firstname ? firstname : user.firstname}
-							onChange={(event) => setFirstname(event.target.value)}
-						/>
-					</>
+					<TextField
+						size="small"
+						variant="outlined"
+						type="text"
+						name="firstname"
+						value={firstname ? firstname : user.firstname}
+						onChange={(event) => setFirstname(event.target.value)}
+					/>
 				) : (
 					user.firstname
 				)}

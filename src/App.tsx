@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Route, Link as RouterLink, Routes } from "react-router-dom";
 import About from "./pages/About";
+import Attachments from "./pages/admin/Attachments";
 import Categories from "./pages/admin/Categories";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
@@ -77,6 +78,7 @@ export default function App() {
 			{/* Configuration des Routes */}
 			<Routes>
 				{/* public routes */}
+				<Route path="/tickets/:id/attachments" element={<Attachments />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				{/* public routes */}

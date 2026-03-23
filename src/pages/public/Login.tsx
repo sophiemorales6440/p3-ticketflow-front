@@ -36,7 +36,7 @@ export default function Login() {
 
 		try {
 			await handleLogin({ email: email, password: password });
-		} catch (error) {
+		} catch (_error) {
 			setError("Impossible de se connecter");
 		} finally {
 			setLoading(false);
