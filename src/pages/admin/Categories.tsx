@@ -13,6 +13,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { fetchWithToken } from "../../utils/api";
 import Category from "./CategoryCard";
 
 interface CategoryType {
@@ -25,7 +26,7 @@ export default function Categories() {
 	const [name, setName] = useState("");
 	const handleAdd = async () => {
 		const newData = { name };
-		await fetch("http://localhost:3310/api/categories/", {
+		await fetchWithToken("http://localhost:3310/api/categories/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
