@@ -7,7 +7,7 @@ export default function About() {
 	return (
 		<Box sx={{ my: 4 }}>
 			<Typography variant="h4" component="h1" gutterBottom>
-				À propos
+				À propos de nous
 			</Typography>
 			<Typography variant="body1" gutterBottom>
 				Cette page est un exemple de navigation avec React Router.
