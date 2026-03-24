@@ -16,7 +16,7 @@ interface User {
 // décrit ce qu'il va se passer pour l'utilisateur
 interface AuthContextType {
 	user: User | null; // l'utilisateur connecté, ou null si déconnecté
-	handleLogin: (infos: LoginInfos) => Promise<void>; // fonction pour se connecter
+	handleLogin: (infos: LoginInfos) => Promise<User>; // fonction pour se connecter
 	handleLogout: () => void; // fonction pour se déconnecter
 }
 
@@ -27,7 +27,7 @@ export default function AuthProvider({
 }) {
 	const [user, setUser] = useState<User | null>(null);
 
-	const handleLogin = async (infos: LoginInfos) => {
+	const handleLogin = async (infos: LoginInfos): Promise<User> => {
 		const newData = { email: infos.email, password: infos.password };
 
 		const response = await fetch("http://localhost:3310/api/auth/signin", {
@@ -43,6 +43,7 @@ export default function AuthProvider({
 		const data = await response.json();
 
 		setUser(data);
+		return data;
 	};
 
 	const handleLogout = () => setUser(null);
