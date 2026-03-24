@@ -35,19 +35,23 @@ export default function Login() {
 		setLoading(true);
 
 		try {
-			await handleLogin({ email: email, password: password });
+			const userData = await handleLogin({ email: email, password: password });
+			if (userData.role === "admin" || userData.role === "technician") {
+				navigate("/admin/dashboard");
+			} else {
+				navigate("/");
+			}
 		} catch (_error) {
 			setError("Impossible de se connecter");
 		} finally {
 			setLoading(false);
 		}
-		navigate("/dashboard");
 	};
 
 	return (
 		<Box
 			sx={{
-				minHeight: "50vh",
+				minHeight: "85vh",
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
