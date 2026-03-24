@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Category from "./CategoryCard";
+import { fetchWithToken } from "../../utils/api";
 
 interface CategoryType {
 	id: number;
@@ -25,7 +26,7 @@ export default function Categories() {
 	const [name, setName] = useState("");
 	const handleAdd = async () => {
 		const newData = { name };
-		await fetch("http://localhost:3310/api/categories/", {
+		await fetchWithToken("http://localhost:3310/api/categories/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

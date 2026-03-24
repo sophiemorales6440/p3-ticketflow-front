@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import Profile from "./ProfileUser";
 import User from "./UserCard";
+import { fetchWithToken } from "../../utils/api";
 
 interface UserType {
 	id: number;
@@ -28,7 +29,7 @@ export default function Users() {
 	console.log(currentUser);
 
 	useEffect(() => {
-		fetch("http://localhost:3310/api/users/")
+		fetchWithToken("http://localhost:3310/api/users/")
 			.then((response) => response.json())
 			.then((data) => setUsers(data))
 			.catch((error) => console.error(error));

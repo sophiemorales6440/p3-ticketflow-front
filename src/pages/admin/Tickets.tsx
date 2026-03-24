@@ -17,6 +17,8 @@ import {
 	translatePriority,
 	translateStatus,
 } from "../../utils/translations";
+import { fetchWithToken } from "../../utils/api";
+
 
 interface TicketType {
 	id: number;
@@ -33,7 +35,7 @@ export default function Tickets() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch("http://localhost:3310/api/tickets/")
+		fetchWithToken("http://localhost:3310/api/tickets/")
 			.then((response) => response.json())
 			.then((data) => setTicket(data))
 			.catch((error) => console.error(error));
