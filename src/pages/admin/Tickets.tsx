@@ -11,14 +11,13 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchWithToken } from "../../utils/api";
 import {
 	formatDate,
 	translateCategory,
 	translatePriority,
 	translateStatus,
 } from "../../utils/translations";
-import { fetchWithToken } from "../../utils/api";
-
 
 interface TicketType {
 	id: number;

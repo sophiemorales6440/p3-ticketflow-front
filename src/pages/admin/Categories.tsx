@@ -13,8 +13,8 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import Category from "./CategoryCard";
 import { fetchWithToken } from "../../utils/api";
+import Category from "./CategoryCard";
 
 interface CategoryType {
 	id: number;

@@ -10,9 +10,9 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { fetchWithToken } from "../../utils/api";
 import Profile from "./ProfileUser";
 import User from "./UserCard";
-import { fetchWithToken } from "../../utils/api";
 
 interface UserType {
 	id: number;
