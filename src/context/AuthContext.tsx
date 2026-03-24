@@ -28,7 +28,7 @@ export default function AuthProvider({
 }) {
 	const [user, setUser] = useState<User | null>(
 		localStorage.getItem("token")
-			? JSON.parse(atob(localStorage.getItem("token")?.split(".")[1]))
+			? JSON.parse(atob(localStorage.getItem("token")!.split(".")[1]))
 			: null,
 	);
 	const [token, setToken] = useState<string | null>(
