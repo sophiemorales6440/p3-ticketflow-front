@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AttachmentsPanel from "./AttachmentsPanel";
 
 export default function TicketEdit() {
 	const navigate = useNavigate();
@@ -123,7 +124,7 @@ export default function TicketEdit() {
 					<MenuItem value="3">Réseau</MenuItem>
 					<MenuItem value="4">Autre</MenuItem>
 				</TextField>
-
+				{ id ? <AttachmentsPanel ticketId={id} /> : null }
 				<Button type="submit" variant="contained" color="primary">
 					Enregistrer
 				</Button>
