@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1E90FF"></stop>
+      <stop offset="100%" stop-color="#00C6FF"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Forme ticket -->
+  <path d="M20 20 
+           H80 
+           A5 5 0 0 1 85 25 
+           V40 
+           A10 10 0 0 0 85 60 
+           V75 
+           A5 5 0 0 1 80 80 
+           H20 
+           A5 5 0 0 1 15 75 
+           V60 
+           A10 10 0 0 0 15 40 
+           V25 
+           A5 5 0 0 1 20 20 Z" fill="url(#grad)"></path>
+
+  <!-- Lettre T -->
+  <text x="50" y="60" text-anchor="middle" font-size="40" font-family="Arial, sans-serif" fill="white" font-weight="bold">
+    T
+  </text>
+</svg>
