@@ -2,53 +2,57 @@
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  Box,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Typography,
+	Box,
+	Button,
+	IconButton,
+	List,
+	ListItem,
+	ListItemText,
+	Paper,
+	Typography,
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export interface Attachment {
-  id: string;
-  filename: string;
-  url?: string;
-  createdAt?: string;
-  size?: number;
-  mimeType?: string;
+	id: string;
+	filename: string;
+	url?: string;
+	createdAt?: string;
+	size?: number;
+	mimeType?: string;
 }
 
 type Props = {
-  ticketId: string;
+	ticketId: string;
 };
 
 export default function AttachmentsPanel({ ticketId }: Props) {
-  const [attachments, setAttachments] = useState<Attachment[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [uploading, setUploading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const [attachments, setAttachments] = useState<Attachment[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [uploading, setUploading] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const fetchAttachments = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/tickets/${encodeURIComponent(ticketId)}/attachments`);
-      if (!res.ok) {
-        throw new Error(`Erreur lors du chargement des pièces jointes (${res.status})`);
-      }
-      const data: Attachment[] = await res.json();
-      setAttachments(data);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }, [ticketId]);
+	const fetchAttachments = useCallback(async () => {
+		setLoading(true);
+		setError(null);
+		try {
+			const res = await fetch(
+				`/api/tickets/${encodeURIComponent(ticketId)}/attachments`,
+			);
+			if (!res.ok) {
+				throw new Error(
+					`Erreur lors du chargement des pièces jointes (${res.status})`,
+				);
+			}
+			const data: Attachment[] = await res.json();
+			setAttachments(data);
+		} catch (err) {
+			setError((err as Error).message);
+		} finally {
+			setLoading(false);
+		}
+	}, [ticketId]);
 
   useEffect(() => {
     if (!ticketId) {
