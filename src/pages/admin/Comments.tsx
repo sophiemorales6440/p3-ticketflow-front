@@ -12,6 +12,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { fetchWithToken } from "../../utils/api";
 
 interface CommentType {
 	id: number;
@@ -28,7 +29,9 @@ export default function Comments() {
 
 	useEffect(() => {
 		const afficheComments = async () => {
-			const response = await fetch("http://localhost:3310/api/comments");
+			const response = await fetchWithToken(
+				"http://localhost:3310/api/comments",
+			);
 			const data = await response.json();
 			setComment(data);
 		};
@@ -36,26 +39,32 @@ export default function Comments() {
 	}, []);
 
 	const handleDelete = async (id: number) => {
-		const response = await fetch(`http://localhost:3310/api/comments/${id}`, {
-			method: "DELETE",
-		});
+		const response = await fetchWithToken(
+			`http://localhost:3310/api/comments/${id}`,
+			{
+				method: "DELETE",
+			},
+		);
 		if (response.ok) {
 			setComment(comment.filter((c) => c.id !== id));
 		}
 	};
 
 	const sendMessage = async () => {
-		const response = await fetch(`http://localhost:3310/api/comments`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		const response = await fetchWithToken(
+			`http://localhost:3310/api/comments`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					content: input,
+					author_id: 1,
+					ticket_id: 1,
+				}),
 			},
-			body: JSON.stringify({
-				content: input,
-				author_id: 1,
-				ticket_id: 1,
-			}),
-		});
+		);
 		if (response.ok) {
 			const nouveauComment = await response.json();
 			setComment([...comment, nouveauComment]);
