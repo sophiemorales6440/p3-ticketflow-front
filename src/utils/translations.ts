@@ -18,16 +18,6 @@ export const translatePriority = (priority: string) => {
 	return translations[priority] || priority;
 };
 
-export const translateCategory = (category_id: number) => {
-	const categories: Record<number, string> = {
-		1: "Logiciel",
-		2: "Matériel",
-		3: "Réseau",
-		4: "Autre",
-	};
-	return categories[category_id] || category_id;
-};
-
 export const formatDate = (date: string) => {
 	return new Date(date).toLocaleDateString("fr-FR");
 };

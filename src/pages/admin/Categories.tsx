@@ -37,7 +37,7 @@ export default function Categories() {
 		SetIsUpdate(true);
 	};
 	useEffect(() => {
-		fetch("http://localhost:3310/api/categories/")
+		fetchWithToken("http://localhost:3310/api/categories/")
 			.then((response) => response.json())
 			.then((data) => setCategories(data))
 			.then(() => SetIsUpdate(false))

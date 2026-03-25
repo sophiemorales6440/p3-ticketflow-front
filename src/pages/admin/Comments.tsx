@@ -14,6 +14,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { fetchWithToken } from "../../utils/api";
 
 interface CommentType {
 	id: number;
@@ -36,9 +37,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 
 	useEffect(() => {
 		const afficheComments = async () => {
-			const response = await fetch(
-				`http://localhost:3310/api/comments/ticket/${ticketId}`,
-			);
+			const response = await fetch("http://localhost:3310/api/comments");
 			const data = await response.json();
 			setComment(data);
 		};
@@ -46,9 +45,12 @@ export default function Comments({ ticketId }: CommentsProps) {
 	}, [ticketId]);
 
 	const handleDelete = async (id: number) => {
-		const response = await fetch(`http://localhost:3310/api/comments/${id}`, {
-			method: "DELETE",
-		});
+		const response = await fetchWithToken(
+			`http://localhost:3310/api/comments/${id}`,
+			{
+				method: "DELETE",
+			},
+		);
 		if (response.ok) {
 			setComment(comment.filter((c) => c.id !== id));
 		}
@@ -63,8 +65,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 			body: JSON.stringify({
 				content: input,
 				author_id: 1,
-				ticket_id: ticketId,
-				is_internal: isInternal,
+				ticket_id: 1,
 			}),
 		});
 		if (response.ok) {
