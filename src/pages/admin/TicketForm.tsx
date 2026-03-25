@@ -7,6 +7,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { fetchWithToken } from "../../utils/api";
 
 export default function TicketForm() {
 	const [title, setTitle] = useState("");
@@ -19,7 +20,7 @@ export default function TicketForm() {
 		e.preventDefault();
 
 		//TODO:  ajouter l'attachment dansFormData quand la  route du back sera prête
-		await fetch("http://localhost:3310/api/tickets", {
+		await fetchWithToken("http://localhost:3310/api/tickets", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
