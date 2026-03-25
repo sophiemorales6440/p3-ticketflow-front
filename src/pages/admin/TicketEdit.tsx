@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Comments from "./Comments";
 
 export default function TicketEdit() {
 	const navigate = useNavigate();
@@ -59,79 +60,82 @@ export default function TicketEdit() {
 	}, [id]);
 
 	return (
-		<Box
-			component="form"
-			onSubmit={handleSubmit}
-			sx={{ display: "flex", justifyContent: "center", p: 3 }}
-		>
-			<Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 480 }}>
-				<Typography variant="h5" mb={3}>
-					Modifier le ticket
-				</Typography>
-				<TextField
-					label="Titre"
-					fullWidth
-					sx={{ mb: 2 }}
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-				<TextField
-					label="Description"
-					fullWidth
-					sx={{ mb: 2 }}
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
-				<TextField
-					select
-					label="Status"
-					fullWidth
-					sx={{ mb: 2 }}
-					value={status}
-					onChange={(e) => setStatus(e.target.value)}
-				>
-					<MenuItem value="open">Ouvert</MenuItem>
-					<MenuItem value="in_progress">En cours</MenuItem>
-					<MenuItem value="resolved">Résolu</MenuItem>
-					<MenuItem value="closed">Fermé</MenuItem>
-				</TextField>
+		<>
+			<Box
+				component="form"
+				onSubmit={handleSubmit}
+				sx={{ display: "flex", justifyContent: "center", p: 3 }}
+			>
+				<Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 480 }}>
+					<Typography variant="h5" mb={3}>
+						Modifier le ticket
+					</Typography>
+					<TextField
+						label="Titre"
+						fullWidth
+						sx={{ mb: 2 }}
+						value={title}
+						onChange={(e) => setTitle(e.target.value)}
+					/>
+					<TextField
+						label="Description"
+						fullWidth
+						sx={{ mb: 2 }}
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
+					/>
+					<TextField
+						select
+						label="Status"
+						fullWidth
+						sx={{ mb: 2 }}
+						value={status}
+						onChange={(e) => setStatus(e.target.value)}
+					>
+						<MenuItem value="open">Ouvert</MenuItem>
+						<MenuItem value="in_progress">En cours</MenuItem>
+						<MenuItem value="resolved">Résolu</MenuItem>
+						<MenuItem value="closed">Fermé</MenuItem>
+					</TextField>
 
-				<TextField
-					select
-					label="Priorité"
-					fullWidth
-					sx={{ mb: 2 }}
-					value={priority}
-					onChange={(e) => setPriority(e.target.value)}
-				>
-					<MenuItem value="low">Basse</MenuItem>
-					<MenuItem value="medium">Moyenne</MenuItem>
-					<MenuItem value="high">Haute</MenuItem>
-					<MenuItem value="critical">Critique</MenuItem>
-				</TextField>
+					<TextField
+						select
+						label="Priorité"
+						fullWidth
+						sx={{ mb: 2 }}
+						value={priority}
+						onChange={(e) => setPriority(e.target.value)}
+					>
+						<MenuItem value="low">Basse</MenuItem>
+						<MenuItem value="medium">Moyenne</MenuItem>
+						<MenuItem value="high">Haute</MenuItem>
+						<MenuItem value="critical">Critique</MenuItem>
+					</TextField>
 
-				<TextField
-					select
-					label="Catégorie"
-					fullWidth
-					sx={{ mb: 2 }}
-					value={category_id}
-					onChange={(e) => setCategoryId(e.target.value)}
-				>
-					<MenuItem value="1">Logiciel</MenuItem>
-					<MenuItem value="2">Matériel</MenuItem>
-					<MenuItem value="3">Réseau</MenuItem>
-					<MenuItem value="4">Autre</MenuItem>
-				</TextField>
+					<TextField
+						select
+						label="Catégorie"
+						fullWidth
+						sx={{ mb: 2 }}
+						value={category_id}
+						onChange={(e) => setCategoryId(e.target.value)}
+					>
+						<MenuItem value="1">Logiciel</MenuItem>
+						<MenuItem value="2">Matériel</MenuItem>
+						<MenuItem value="3">Réseau</MenuItem>
+						<MenuItem value="4">Autre</MenuItem>
+					</TextField>
 
-				<Button type="submit" variant="contained" color="primary">
-					Enregistrer
-				</Button>
+					<Button type="submit" variant="contained" color="primary">
+						Enregistrer
+					</Button>
 
-				<Button variant="contained" color="error" onClick={handleDelete}>
-					Supprimer
-				</Button>
-			</Paper>
-		</Box>
+					<Button variant="contained" color="error" onClick={handleDelete}>
+						Supprimer
+					</Button>
+				</Paper>
+			</Box>
+			<Comments ticketId={Number(id)} />
+		</>
 	);
 }

@@ -7,7 +7,6 @@ import Background from "./assets/background.webp";
 import Footer from "./components/ui/Footer";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
-import Comments from "./pages/admin/Comments";
 import Dashboard from "./pages/admin/Dashboard";
 import TicketEdit from "./pages/admin/TicketEdit";
 import TicketForm from "./pages/admin/TicketForm";
@@ -69,15 +68,6 @@ export default function App() {
 						>
 							Users
 						</Link>
-						<Link
-							component={RouterLink}
-							to="/comments"
-							variant="h6"
-							underline="hover"
-							color="white"
-						>
-							Commentaires
-						</Link>
 					</Stack>
 				</Box>
 
@@ -91,7 +81,6 @@ export default function App() {
 					<Route path="/" element={<Navigate to="/login" />} />
 					<Route path="/about" element={<About />} />
 					<Route path="/users" element={<Users />} />
-					<Route path="/comments" element={<Comments />} />
 					<Route path="/categories" element={<Categories />} />
 					{/* Only for Admins/tech */}
 					<Route path="/admin/dashboard" element={<Dashboard />} />

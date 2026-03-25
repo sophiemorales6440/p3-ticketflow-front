@@ -3,6 +3,8 @@ import SendIcon from "@mui/icons-material/Send";
 import {
 	Avatar,
 	Box,
+	Checkbox,
+	FormControlLabel,
 	IconButton,
 	InputAdornment,
 	List,
@@ -23,20 +25,26 @@ interface CommentType {
 	is_internal: number;
 }
 
-export default function Comments() {
+interface CommentsProps {
+	ticketId: number;
+}
+
+export default function Comments({ ticketId }: CommentsProps) {
 	const [comment, setComment] = useState<CommentType[]>([]);
 	const [input, setInput] = useState("");
+	const [isInternal, setIsInternal] = useState(false);
+	const userRole: string = "technician";
 
 	useEffect(() => {
 		const afficheComments = async () => {
 			const response = await fetchWithToken(
-				"http://localhost:3310/api/comments",
+				`http://localhost:3310/api/comments/ticket/${ticketId}`,
 			);
 			const data = await response.json();
 			setComment(data);
 		};
 		afficheComments();
-	}, []);
+	}, [ticketId]);
 
 	const handleDelete = async (id: number) => {
 		const response = await fetchWithToken(
@@ -55,13 +63,11 @@ export default function Comments() {
 			`http://localhost:3310/api/comments`,
 			{
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
 				body: JSON.stringify({
 					content: input,
 					author_id: 1,
-					ticket_id: 1,
+					ticket_id: ticketId,
+					is_internal: isInternal,
 				}),
 			},
 		);
@@ -69,6 +75,7 @@ export default function Comments() {
 			const nouveauComment = await response.json();
 			setComment([...comment, nouveauComment]);
 			setInput("");
+			setIsInternal(false);
 		}
 	};
 
@@ -194,13 +201,25 @@ export default function Comments() {
 			<Box
 				sx={{ px: 2, py: 1.5, borderTop: "1px solid", borderColor: "divider" }}
 			>
+				{(userRole === "admin" || userRole === "technician") && (
+					<FormControlLabel
+						control={
+							<Checkbox
+								size="small"
+								checked={isInternal}
+								onChange={(e) => setIsInternal(e.target.checked)}
+							/>
+						}
+						label="Commentaire interne"
+					/>
+				)}
 				<TextField
 					fullWidth
 					size="small"
 					placeholder="Écrire un commentaire..."
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
-					onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+					onKeyDown={(e) => e.key === "Enter" && input.trim() && sendMessage()}
 					sx={{ "& .MuiOutlinedInput-root": { borderRadius: 5 } }}
 					slotProps={{
 						input: {
