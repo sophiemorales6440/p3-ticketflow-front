@@ -33,7 +33,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 	const [comment, setComment] = useState<CommentType[]>([]);
 	const [input, setInput] = useState("");
 	const [isInternal, setIsInternal] = useState(false);
-	const userRole = "technician"; // TODO: remplacer par useAuth() quand l'auth sera branchée
+	const userRole: string = "technician";
 
 	useEffect(() => {
 		const afficheComments = async () => {
