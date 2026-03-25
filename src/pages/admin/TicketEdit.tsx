@@ -124,7 +124,7 @@ export default function TicketEdit() {
 					<MenuItem value="3">Réseau</MenuItem>
 					<MenuItem value="4">Autre</MenuItem>
 				</TextField>
-				{ id ? <AttachmentsPanel ticketId={id} /> : null }
+				{id ? <AttachmentsPanel ticketId={id} /> : null}
 				<Button type="submit" variant="contained" color="primary">
 					Enregistrer
 				</Button>
