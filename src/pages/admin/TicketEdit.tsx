@@ -8,13 +8,14 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { fetchWithToken } from "../../utils/api";
 
 export default function TicketEdit() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 
 	const handleDelete = async () => {
-		await fetch(`http://localhost:3310/api/tickets/${id}`, {
+		await fetchWithToken(`http://localhost:3310/api/tickets/${id}`, {
 			method: "DELETE",
 		});
 		navigate("/tickets");
@@ -30,7 +31,7 @@ export default function TicketEdit() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		await fetch(`http://localhost:3310/api/tickets/${id}`, {
+		await fetchWithToken(`http://localhost:3310/api/tickets/${id}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
@@ -46,7 +47,7 @@ export default function TicketEdit() {
 		navigate("/tickets");
 	};
 	useEffect(() => {
-		fetch(`http://localhost:3310/api/tickets/${id}`)
+		fetchWithToken(`http://localhost:3310/api/tickets/${id}`)
 			.then((response) => response.json())
 			.then((data) => {
 				setTitle(data.title);

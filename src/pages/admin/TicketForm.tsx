@@ -7,6 +7,8 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchWithToken } from "../../utils/api";
 
 export default function TicketForm() {
 	const [title, setTitle] = useState("");
@@ -14,24 +16,26 @@ export default function TicketForm() {
 	const [priority, setPriority] = useState("");
 	const [category_id, setCategoryId] = useState("");
 	const [_attachment, setAttachment] = useState<File | null>(null); //  TODO à brancher avec la route attachments du back, puis enlever le _ pour éviter les warnings de variable non utilisée
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		//TODO:  ajouter l'attachment dansFormData quand la  route du back sera prête
-		await fetch("http://localhost:3310/api/tickets", {
+		// TODO: ajouter l'attachment dans FormData quand la route du back sera prête
+		await fetchWithToken("http://localhost:3310/api/tickets", {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				title,
 				description,
 				priority,
 				category_id,
-				status: "open", // TODO: sera géré par le back par défaut
-				client_id: 3, // TODO: remplacer par currentUser.is depuis AuthContext
-				technician_id: null, //TODO: sera assigné par l'admin plus tard
+				status: "open",
+				client_id: 3,
+				technician_id: null,
 			}),
 		});
+
+		navigate("/tickets");
 	};
 
 	return (
