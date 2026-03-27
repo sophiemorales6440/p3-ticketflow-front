@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchWithToken } from "../../utils/api";
 import { useAuth } from "../../context/AuthContext";
+import { fetchWithToken } from "../../utils/api";
 
 export default function TicketForm() {
 	const [title, setTitle] = useState("");
