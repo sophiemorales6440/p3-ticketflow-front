@@ -1,5 +1,6 @@
 import {
 	Box,
+	Card,
 	Paper,
 	Table,
 	TableBody,
@@ -40,6 +41,55 @@ export default function Users() {
 			<Typography variant="h4" gutterBottom>
 				Gestion des utilisateurs
 			</Typography>
+			<Box
+				sx={{
+					display: "grid",
+					gridTemplateColumns: "1fr 1fr 1fr 1fr",
+					gap: "12px",
+					mb: 3,
+				}}
+			>
+				<Card sx={{ p: 2 }}>
+					<Typography sx={{ fontSize: "11px", color: "text.secondary" }}>
+						Utilisateurs
+					</Typography>
+					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>
+						{users.length}
+					</Typography>
+					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
+						+ 3 ce mois
+					</Typography>
+				</Card>
+				<Card sx={{ p: 2 }}>
+					<Typography sx={{ fontSize: "11px", color: "text.secondary" }}>
+						Ticket en cours
+					</Typography>
+					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>47</Typography>
+					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
+						12 en attente
+					</Typography>
+				</Card>
+				<Card sx={{ p: 2 }}>
+					<Typography sx={{ fontSize: "11px", color: "text.secondary" }}>
+						Catégories
+					</Typography>
+					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>9</Typography>
+					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
+						2 inactives
+					</Typography>
+				</Card>
+				<Card sx={{ p: 2 }}>
+					<Typography sx={{ fontSize: "11px", color: "text.secondary" }}>
+						Tickets résolus
+					</Typography>
+					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>
+						203
+					</Typography>
+					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
+						Taux 87%
+					</Typography>
+				</Card>
+			</Box>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
