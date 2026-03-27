@@ -12,6 +12,7 @@ import TicketEdit from "./pages/admin/TicketEdit";
 import TicketForm from "./pages/admin/TicketForm";
 import Tickets from "./pages/admin/Tickets";
 import Users from "./pages/admin/Users";
+import ClientDashboard from "./pages/clients/ClientDashboard";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
 
@@ -86,6 +87,8 @@ export default function App() {
 					<Route path="/admin/dashboard" element={<Dashboard />} />
 					<Route path="/tickets" element={<Tickets />} />
 					<Route path="/tickets/:id/edit" element={<TicketEdit />} />
+					{/* Only for users/customers */}
+					<Route path="/client/dashboard" element={<ClientDashboard />} />
 				</Routes>
 			</Container>
 			<Footer />

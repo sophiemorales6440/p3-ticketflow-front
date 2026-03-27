@@ -39,7 +39,7 @@ export default function Login() {
 			if (userData.role === "admin" || userData.role === "technician") {
 				navigate("/admin/dashboard");
 			} else {
-				navigate("/");
+				navigate("/client/dashboard");
 			}
 		} catch (_error) {
 			setError("Impossible de se connecter");
