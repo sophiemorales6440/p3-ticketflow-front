@@ -21,7 +21,6 @@ export default function TicketForm() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		// TODO: ajouter l'attachment dans FormData quand la route du back sera prête
 		//TODO:  ajouter l'attachment dansFormData quand la  route du back sera prête
 		await fetchWithToken("http://localhost:3310/api/tickets", {
 			method: "POST",
@@ -35,8 +34,9 @@ export default function TicketForm() {
 				technician_id: null,
 			}),
 		});
+		window.alert("Ticket créé et envoyé à nos équipes");
 
-		navigate("/tickets");
+		navigate("/client/dashboard");
 	};
 
 	return (
