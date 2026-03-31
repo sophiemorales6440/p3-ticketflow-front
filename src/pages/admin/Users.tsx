@@ -1,116 +1,172 @@
 import {
-	Box,
-	Paper,
-	Table,
-	TableBody,
+	IconButton,
+	MenuItem,
 	TableCell,
-	TableContainer,
-	TableHead,
 	TableRow,
 	TextField,
-	Typography,
-	Tab,
-	Tabs
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Check, PencilLine, Trash2, UserCheck } from "lucide-react";
+import { useState } from "react";
 import { fetchWithToken } from "../../utils/api";
-import Profile from "./ProfileUser";
-import User from "./UserCard";
 
 interface UserType {
 	id: number;
 	firstname: string;
 	lastname: string;
-	role: string;
 	email: string;
 	password: string;
+	role: string;
 }
 
-export default function Users() {
-	const [users, setUsers] = useState<UserType[]>([]);
-	const [currentUser, setCurrentUser] = useState<UserType | null>(null);
-	const [isUpdate, SetIsUpdate] = useState(false);
-	const [search, setSearch] = useState("");
-	const [activeTab, setActiveTab] = useState(0)
+interface Props {
+	user: UserType;
+	setCurrentUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+	SetIsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-	useEffect(() => {
-		fetchWithToken("http://localhost:3310/api/users/")
-			.then((response) => response.json())
-			.then((data) => setUsers(data))
-			.catch((error) => console.error(error));
-	}, [isUpdate]);
+const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
+	const [isEdit, setIsEdit] = useState(false);
+	const [firstname, setFirstname] = useState("");
+	const [lastname, setLastname] = useState("");
+	const [email, setEmail] = useState("");
+	const [role, setRole] = useState("");
 
-	const filteredUsers = users.filter(
-		(user) =>
-			user.firstname.toLowerCase().includes(search.toLowerCase()) ||
-			user.lastname.toLowerCase().includes(search.toLowerCase()) ||
-			user.email.toLowerCase().includes(search.toLowerCase()),
-	);
+	const handleEdit = () => {
+		console.log(user);
+		setIsEdit(true);
+	};
 
-	const staffUsers = filteredUsers.filter(user => user.role !== "client")
-	const clientsUsers = filteredUsers.filter(user => user.role === "client")
+	const handleDelete = async () => {
+		const response = await fetch(`http://localhost:3310/api/users/${user.id}`, {
+			method: "DELETE",
+			headers: {
+				"content-Type": "application/json",
+			},
+		});
+
+		if (response.ok) {
+			SetIsUpdate((prev) => !prev);
+		}
+	};
+
+	const handleSave = async () => {
+		const newData = {
+			id: user.id,
+			firstname: firstname || user.firstname,
+			lastname: lastname || user.lastname,
+			email: email || user.email,
+			role: role || user.role,
+		};
+
+		const response = await fetchWithToken(
+			`http://localhost:3310/api/users/${user.id}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newData),
+			},
+		);
+
+		if (response.ok) {
+			SetIsUpdate((prev) => !prev);
+			setIsEdit(false);
+			setFirstname("");
+			setLastname("");
+			setEmail("");
+		}
+	};
 
 	return (
-		<Box sx={{ p: 3 }}>
-			<Typography variant="h4" gutterBottom>
-				Gestion des utilisateurs
-			</Typography>
+		<TableRow hover sx={{ "&:hover": { bgcolor: "action.hover" } }}>
+			<TableCell>
+				{isEdit ? (
+					<TextField
+						size="small"
+						variant="outlined"
+						type="text"
+						name="firstname"
+						value={firstname ? firstname : user.firstname}
+						onChange={(event) => setFirstname(event.target.value)}
+					/>
+				) : (
+					user.firstname
+				)}
+			</TableCell>
 
-			<TextField
-				label="Rechercher par prénom, nom ou email"
-				variant="outlined"
-				fullWidth
-				sx={{
-					mb: 3,
-					bgcolor: "white",
-					borderRadius: 2,
-					"& .MuiOutlinedInput-root": {
-						"& fieldset": { borderColor: "#000000", borderWidth: "1px" },
-						"&:hover fieldset": { borderColor: "#00FFD1" },
-						"&.Mui-focused fieldset": { borderColor: "#00FFD1" },
-					},
-				}}
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-			/>
-			<TableContainer component={Paper}>
-				<Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)}>
-					<Tab label="Staff" />
-					<Tab label="Nos Clients" />
-				</Tabs>
-				<Table>
-					<TableHead>
-						<TableRow sx={{ bgcolor: "#2f5071" }}>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
-								Prénom
-							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
-								Nom
-							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
-								Email
-							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
-								Role
-							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
-								Modifier
-							</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{(activeTab === 0 ? staffUsers : clientsUsers).map((user) => (
-								<User
-									key={user.id}
-									user={user}
-									setCurrentUser={setCurrentUser}
-									SetIsUpdate={SetIsUpdate}
-								/>
-							))}
-					</TableBody>
-				</Table>
-			</TableContainer>
-			{currentUser && <Profile currentUser={currentUser} />}
-		</Box>
+			<TableCell>
+				{isEdit ? (
+					<TextField
+						size="small"
+						variant="outlined"
+						type="text"
+						name="lastname"
+						value={lastname ? lastname : user.lastname}
+						onChange={(event) => setLastname(event.target.value)}
+					/>
+				) : (
+					user.lastname
+				)}
+			</TableCell>
+
+			<TableCell>
+				{isEdit ? (
+					<TextField
+						size="small"
+						variant="outlined"
+						type="email"
+						name="email"
+						value={email ? email : user.email}
+						onChange={(event) => setEmail(event.target.value)}
+					/>
+				) : (
+					user.email
+				)}
+			</TableCell>
+
+			<TableCell>
+				{isEdit ? (
+					user.role === "client" ? (
+						user.role
+					) : (
+						<TextField
+							select
+							size="small"
+							variant="outlined"
+							type="role"
+							name="role"
+							value={role ? role : user.role}
+							onChange={(event) => setRole(event.target.value)}
+						>
+							<MenuItem value="admin">Admin</MenuItem>
+							<MenuItem value="technician">Technicien</MenuItem>
+						</TextField>
+					)
+				) : (
+					user.role
+				)}
+			</TableCell>
+
+			<TableCell sx={{ display: "flex", gap: 0.5 }}>
+				{isEdit ? (
+					<IconButton color="success" onClick={handleSave}>
+						<Check size={18} />
+					</IconButton>
+				) : (
+					<IconButton color="primary" onClick={handleEdit}>
+						<PencilLine size={18} />
+					</IconButton>
+				)}
+				<IconButton color="info" onClick={() => setCurrentUser(user)}>
+					<UserCheck size={18} />
+				</IconButton>
+				<IconButton color="error" onClick={handleDelete}>
+					<Trash2 size={18} />
+				</IconButton>
+			</TableCell>
+		</TableRow>
 	);
-}
+};
+
+export default User;
