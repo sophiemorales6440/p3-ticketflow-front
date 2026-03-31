@@ -23,13 +23,41 @@ interface UserType {
 	email: string;
 	password: string;
 }
+interface TicketType {
+	id: number;
+	title: string;
+	status: string;
+	priority: string;
+	category_id: number;
+	category_name: string;
+	created_at: string;
+	resolved_at: string | null;
+}
+interface CategoryType {
+	id: number;
+	name: string;
+}
 
-export default function Users() {
+export default function Dashboard() {
 	const [users, setUsers] = useState<UserType[]>([]);
 	const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 	const [isUpdate, SetIsUpdate] = useState(false);
 	console.log(currentUser);
-	const [search, setSearch] = useState(""); // State pour la recherche
+	const [search, setSearch] = useState("");
+	const [tickets, setTickets] = useState<TicketType[]>([]);
+	const [categories, setCategories] = useState<CategoryType[]>([]);
+
+	useEffect(() => {
+		fetchWithToken("http://localhost:3310/api/tickets/")
+			.then((response) => response.json())
+			.then((data) => setTickets(data))
+			.catch((error) => console.error(error));
+
+		fetchWithToken("http://localhost:3310/api/categories/")
+			.then((response) => response.json())
+			.then((data) => setCategories(data))
+			.catch((error) => console.error(error));
+	}, []);
 
 	useEffect(() => {
 		fetchWithToken("http://localhost:3310/api/users/")
@@ -72,7 +100,9 @@ export default function Users() {
 					<Typography sx={{ fontSize: "11px", color: "text.secondary" }}>
 						Ticket en cours
 					</Typography>
-					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>47</Typography>
+					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>
+						{tickets.filter((t) => t.status === "in_progress").length}
+					</Typography>
 					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
 						12 en attente
 					</Typography>
@@ -81,7 +111,9 @@ export default function Users() {
 					<Typography sx={{ fontSize: "11px", color: "text.secondary" }}>
 						Catégories
 					</Typography>
-					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>9</Typography>
+					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>
+						{categories.length}
+					</Typography>
 					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
 						2 inactives
 					</Typography>
@@ -91,7 +123,7 @@ export default function Users() {
 						Tickets résolus
 					</Typography>
 					<Typography sx={{ fontSize: "26px", fontWeight: 700 }}>
-						203
+						{tickets.filter((t) => t.status === "resolved").length}
 					</Typography>
 					<Typography sx={{ fontSize: "11px", color: "text.disabled" }}>
 						Taux 87%
