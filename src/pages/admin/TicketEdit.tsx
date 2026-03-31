@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchWithToken } from "../../utils/api";
+import AttachmentsPanel from "./AttachmentsPanel";
 import Comments from "./Comments";
 
 export default function TicketEdit() {
@@ -136,6 +137,7 @@ export default function TicketEdit() {
 					</Button>
 				</Paper>
 			</Box>
+			<AttachmentsPanel ticketId={String(id)} />
 			<Comments ticketId={Number(id)} />
 		</>
 	);
