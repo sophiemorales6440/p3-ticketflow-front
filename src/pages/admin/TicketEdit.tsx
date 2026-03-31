@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { fetchWithToken } from "../../utils/api";
 import AttachmentsPanel from "./AttachmentsPanel";
 import Comments from "./Comments";
-import { useAuth } from "../../context/AuthContext";
 
 export default function TicketEdit() {
 	const navigate = useNavigate();
@@ -20,11 +20,11 @@ export default function TicketEdit() {
 
 	const redirectActionUser = () => {
 		if (user?.role === "admin") {
-			navigate("/tickets")
+			navigate("/tickets");
 		} else {
-			navigate("/client/dashboard")
+			navigate("/client/dashboard");
 		}
-	}
+	};
 
 	const handleDelete = async () => {
 		await fetchWithToken(`http://localhost:3310/api/tickets/${id}`, {
@@ -38,7 +38,7 @@ export default function TicketEdit() {
 	const [description, setDescription] = useState("");
 	const [priority, setPriority] = useState("");
 	const [category_id, setCategoryId] = useState("");
-	const [_attachment, _setAttachment] = useState<File | null>(null); 
+	const [_attachment, _setAttachment] = useState<File | null>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -52,7 +52,7 @@ export default function TicketEdit() {
 				priority,
 				category_id,
 				status,
-				client_id: user?.id, 
+				client_id: user?.id,
 				technician_id: null, //TODO: sera assigné par l'admin plus tard
 			}),
 		});

@@ -40,8 +40,8 @@ export default function ClientDashboard() {
 	const { user } = useAuth();
 
 	useEffect(() => {
-		console.log(user)
-		console.log("userid:", user?.id)
+		console.log(user);
+		console.log("userid:", user?.id);
 		fetchWithToken("http://localhost:3310/api/tickets/")
 			.then((response) => response.json())
 			.then((data) => {
