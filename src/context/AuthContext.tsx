@@ -12,6 +12,8 @@ interface User {
 	id: number;
 	email: string;
 	role: string;
+	firstname: string;
+	lastname: string;
 }
 
 // décrit ce qu'il va se passer pour l'utilisateur
@@ -32,7 +34,13 @@ export default function AuthProvider({
 		if (token) {
 			try {
 				const decoded = jwtDecode<User>(token);
-				setUser({ id: decoded.id, email: decoded.email, role: decoded.role });
+				setUser({
+					id: decoded.id,
+					email: decoded.email,
+					role: decoded.role,
+					firstname: decoded.firstname,
+					lastname: decoded.lastname,
+				});
 			} catch (error) {
 				console.error("Token invalide :", error);
 				localStorage.removeItem("token");

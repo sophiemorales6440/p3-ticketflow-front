@@ -14,6 +14,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { fetchWithToken } from "../../utils/api";
 
 interface CommentType {
@@ -23,6 +24,9 @@ interface CommentType {
 	ticket_id: number;
 	created_at: string;
 	is_internal: number;
+	firstname: string;
+	lastname: string;
+	role: string;
 }
 
 interface CommentsProps {
@@ -33,7 +37,8 @@ export default function Comments({ ticketId }: CommentsProps) {
 	const [comment, setComment] = useState<CommentType[]>([]);
 	const [input, setInput] = useState("");
 	const [isInternal, setIsInternal] = useState(false);
-	const userRole: string = "technician";
+	const { user } = useAuth();
+	const userRole = user?.role ?? "";
 
 	useEffect(() => {
 		const afficheComments = async () => {
@@ -65,7 +70,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 				method: "POST",
 				body: JSON.stringify({
 					content: input,
-					author_id: 1,
+					author_id: user?.id,
 					ticket_id: ticketId,
 					is_internal: isInternal,
 				}),
@@ -112,10 +117,13 @@ export default function Comments({ ticketId }: CommentsProps) {
 						height: 36,
 					}}
 				>
-					S
+					{user?.firstname?.[0].toUpperCase()}
+					{user?.lastname?.[0].toUpperCase()}
 				</Avatar>
 				<Box>
-					<Typography variant="subtitle2">Support TicketFlow</Typography>
+					<Typography variant="subtitle2">
+						{user?.firstname} {user?.lastname}
+					</Typography>
 					<Typography variant="caption" color="success.main">
 						● En ligne
 					</Typography>
@@ -133,7 +141,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 				}}
 			>
 				{comment.map((msg) => {
-					const isUser = msg.author_id === 1;
+					const isUser = msg.author_id === user?.id;
 					return (
 						<ListItem
 							key={msg.id}
@@ -165,11 +173,23 @@ export default function Comments({ ticketId }: CommentsProps) {
 											width: 20,
 											height: 20,
 											fontSize: 10,
-											bgcolor: isUser ? "success.light" : "primary.light",
-											color: isUser ? "success.dark" : "primary.dark",
+											bgcolor: isUser
+												? userRole === "admin"
+													? "success.light"
+													: userRole === "technician"
+														? "primary.light"
+														: "warning.light"
+												: msg.role === "admin"
+													? "success.light"
+													: msg.role === "technician"
+														? "primary.light"
+														: "warning.light",
+											color: "white",
 										}}
 									>
-										{isUser ? "M" : "S"}
+										{isUser
+											? `${user?.firstname?.[0].toUpperCase()}${user?.lastname?.[0].toUpperCase()}`
+											: `${msg.firstname?.[0].toUpperCase()}${msg.lastname?.[0].toUpperCase()}`}
 									</Avatar>
 									<Typography variant="caption" color="text.disabled">
 										{msg.created_at}
