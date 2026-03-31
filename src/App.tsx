@@ -15,8 +15,12 @@ import Users from "./pages/admin/Users";
 import ClientDashboard from "./pages/clients/ClientDashboard";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
+import { useAuth } from "./context/AuthContext";
+
 
 export default function App() {
+		const { user } = useAuth();
+	
 	return (
 		<Box
 			sx={{
@@ -51,7 +55,8 @@ export default function App() {
 						>
 							Register
 						</Link>
-						<Link
+
+						{user && <Link
 							component={RouterLink}
 							to="/about"
 							variant="h6"
@@ -59,8 +64,9 @@ export default function App() {
 							color="white"
 						>
 							À propos
-						</Link>
-						<Link
+						</Link>}
+
+						{user && <Link
 							component={RouterLink}
 							to="/users"
 							variant="h6"
@@ -68,7 +74,7 @@ export default function App() {
 							color="white"
 						>
 							Users
-						</Link>
+						</Link>}
 					</Stack>
 				</Box>
 
