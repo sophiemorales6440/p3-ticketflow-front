@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import { Navigate, Route, Link as RouterLink, Routes } from "react-router-dom";
 import Background from "./assets/background.webp";
 import Footer from "./components/ui/Footer";
+import { useAuth } from "./context/AuthContext";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
 import Dashboard from "./pages/admin/Dashboard";
@@ -17,6 +18,8 @@ import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
 
 export default function App() {
+	const { user } = useAuth();
+
 	return (
 		<Box
 			sx={{
@@ -51,24 +54,30 @@ export default function App() {
 						>
 							Register
 						</Link>
-						<Link
-							component={RouterLink}
-							to="/about"
-							variant="h6"
-							underline="hover"
-							color="white"
-						>
-							À propos
-						</Link>
-						<Link
-							component={RouterLink}
-							to="/users"
-							variant="h6"
-							underline="hover"
-							color="white"
-						>
-							Users
-						</Link>
+
+						{user && user.role === "admin" && (
+							<Link
+								component={RouterLink}
+								to="/about"
+								variant="h6"
+								underline="hover"
+								color="white"
+							>
+								À propos
+							</Link>
+						)}
+
+						{user && user.role === "admin" && (
+							<Link
+								component={RouterLink}
+								to="/users"
+								variant="h6"
+								underline="hover"
+								color="white"
+							>
+								Users
+							</Link>
+						)}
 					</Stack>
 				</Box>
 
