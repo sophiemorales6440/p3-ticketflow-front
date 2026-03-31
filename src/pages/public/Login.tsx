@@ -36,8 +36,10 @@ export default function Login() {
 
 		try {
 			const userData = await handleLogin({ email: email, password: password });
-			if (userData.role === "admin" || userData.role === "technician") {
+			if (userData.role === "admin") {
 				navigate("/admin/dashboard");
+			} else if (userData.role === "technician") {
+				navigate("/technician/dashboard");
 			} else {
 				navigate("/client/dashboard");
 			}
@@ -116,7 +118,6 @@ export default function Login() {
 						sx={{ mb: 4 }}
 						InputProps={{
 							endAdornment: (
-								// InputAdornment + IconButton: the eye icon inside the input
 								<InputAdornment position="end">
 									<IconButton
 										onClick={() => setShowPassword((p) => !p)}

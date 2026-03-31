@@ -16,6 +16,7 @@ import Users from "./pages/admin/Users";
 import ClientDashboard from "./pages/clients/ClientDashboard";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
+import TechnicienDashboard from "./pages/technicien/TechnicienDashboard";
 
 export default function App() {
 	const { user } = useAuth();
@@ -94,6 +95,10 @@ export default function App() {
 					<Route path="/categories" element={<Categories />} />
 					{/* Only for Admins/tech */}
 					<Route path="/admin/dashboard" element={<Dashboard />} />
+					<Route
+						path="/technician/dashboard"
+						element={<TechnicienDashboard />}
+					/>
 					<Route path="/tickets" element={<Tickets />} />
 					<Route path="/tickets/:id/edit" element={<TicketEdit />} />
 					{/* Only for users/customers */}
