@@ -1,4 +1,13 @@
-import { Drawer, Typography } from "@mui/material";
+import {
+	Drawer,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { fetchWithToken } from "../../utils/api";
@@ -115,18 +124,36 @@ export default function Dashboard() {
 			<Typography variant="h5" fontWeight={600} gutterBottom sx={{ mt: 5 }}>
 				Techniciens
 			</Typography>
-
-			{technicians.map((technician) => (
-				<Box key={technician.id} sx={{ mb: 2 }}>
-					<Typography variant="body1">
-						{technician.firstname} {technician.lastname}
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
-						Tickets assignés:{" "}
-						{tickets.filter((t) => t.technician_id === technician.id).length}
-					</Typography>
-				</Box>
-			))}
+			<TableContainer
+				component={Box}
+				sx={{ p: 2, bgcolor: "background.paper", borderRadius: 2 }}
+			>
+				<Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+					{technicians.length} technicien{technicians.length > 1 ? "s" : ""}
+				</Typography>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableCell sx={{ fontWeight: "bold" }}>Nom</TableCell>
+							<TableCell sx={{ fontWeight: "bold" }}>Prénom</TableCell>
+							<TableCell sx={{ fontWeight: "bold" }}>
+								Tickets assignés
+							</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{technicians.map((tech) => (
+							<TableRow key={tech.id}>
+								<TableCell>{tech.lastname}</TableCell>
+								<TableCell>{tech.firstname}</TableCell>
+								<TableCell>
+									{tickets.filter((t) => t.technician_id === tech.id).length}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</Box>
 	);
 }
