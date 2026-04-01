@@ -7,14 +7,29 @@ import StatCard from "../technicien/StatCard";
 import type { TicketType } from "../technicien/TechnicienDashboard.utils";
 import TicketTable from "../technicien/TicketTable";
 
+interface UserType {
+	id: number;
+	firstname: string;
+	lastname: string;
+	role: string;
+}
+
 export default function Dashboard() {
 	const [tickets, setTickets] = useState<TicketType[]>([]);
 	const navigate = useNavigate();
+	const [users, setUsers] = useState<UserType[]>([]);
 
 	useEffect(() => {
 		fetchWithToken("http://localhost:3310/api/tickets/")
 			.then((response) => response.json())
 			.then((data) => setTickets(data))
+			.catch((error) => console.error(error));
+	}, []);
+
+	useEffect(() => {
+		fetchWithToken("http://localhost:3310/api/users/")
+			.then((response) => response.json())
+			.then((data) => setUsers(data))
 			.catch((error) => console.error(error));
 	}, []);
 
@@ -43,6 +58,8 @@ export default function Dashboard() {
 			color: "#ef4444",
 		},
 	];
+	const technicians = users.filter((u) => u.role === "technician");
+
 	return (
 		<Box sx={{ p: 3 }}>
 			<Typography variant="h4" gutterBottom>
@@ -70,6 +87,17 @@ export default function Dashboard() {
 				selectedTicketId={null}
 				onSelectTicket={(ticket) => navigate(`/tickets/${ticket.id}/edit`)}
 			/>
+			{technicians.map((technician) => (
+				<Box key={technician.id} sx={{ mb: 2 }}>
+					<Typography variant="body1">
+						{technician.firstname} {technician.lastname}
+					</Typography>
+					<Typography variant="body2" color="text.secondary">
+						Tickets assignés:{" "}
+						{tickets.filter((t) => t.technician_id === technician.id).length}
+					</Typography>
+				</Box>
+			))}
 		</Box>
 	);
 }
