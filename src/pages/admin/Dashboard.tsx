@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
+import { Drawer, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { fetchWithToken } from "../../utils/api";
 import StatCard from "../technicien/StatCard";
 import type { TicketType } from "../technicien/TechnicienDashboard.utils";
+import TicketDetailPanel from "../technicien/TicketDetailPanel";
 import TicketTable from "../technicien/TicketTable";
 
 interface UserType {
@@ -16,8 +16,8 @@ interface UserType {
 
 export default function Dashboard() {
 	const [tickets, setTickets] = useState<TicketType[]>([]);
-	const navigate = useNavigate();
 	const [users, setUsers] = useState<UserType[]>([]);
+	const [selectedTicket, setSelectedTicket] = useState<TicketType | null>(null);
 
 	useEffect(() => {
 		fetchWithToken("http://localhost:3310/api/tickets/")
@@ -60,6 +60,17 @@ export default function Dashboard() {
 	];
 	const technicians = users.filter((u) => u.role === "technician");
 
+	const handleStatusChange = (ticketId: number, newStatus: string) => {
+		setTickets((prev) =>
+			prev.map((t) => (t.id === ticketId ? { ...t, status: newStatus } : t)),
+		);
+		if (selectedTicket?.id === ticketId) {
+			setSelectedTicket((prev) =>
+				prev ? { ...prev, status: newStatus } : prev,
+			);
+		}
+	};
+
 	return (
 		<Box sx={{ p: 3 }}>
 			<Typography variant="h4" gutterBottom>
@@ -84,9 +95,27 @@ export default function Dashboard() {
 			</Box>
 			<TicketTable
 				tickets={tickets}
-				selectedTicketId={null}
-				onSelectTicket={(ticket) => navigate(`/tickets/${ticket.id}/edit`)}
+				selectedTicketId={selectedTicket?.id ?? null}
+				onSelectTicket={setSelectedTicket}
 			/>
+			<Drawer
+				anchor="right"
+				open={!!selectedTicket}
+				onClose={() => setSelectedTicket(null)}
+			>
+				{selectedTicket && (
+					<TicketDetailPanel
+						ticket={selectedTicket}
+						onClose={() => setSelectedTicket(null)}
+						onStatusChange={handleStatusChange}
+					/>
+				)}
+			</Drawer>
+
+			<Typography variant="h5" fontWeight={600} gutterBottom sx={{ mt: 5 }}>
+				Techniciens
+			</Typography>
+
 			{technicians.map((technician) => (
 				<Box key={technician.id} sx={{ mb: 2 }}>
 					<Typography variant="body1">
