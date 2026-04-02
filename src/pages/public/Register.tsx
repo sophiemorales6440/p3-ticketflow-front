@@ -4,7 +4,6 @@ import {
 	Visibility,
 	VisibilityOff,
 } from "@mui/icons-material";
-
 import {
 	Box,
 	Button,
@@ -12,21 +11,21 @@ import {
 	IconButton,
 	InputAdornment,
 	LinearProgress,
-	Link,
 	Paper,
 	TextField,
 	Typography,
 } from "@mui/material";
-
 import { useState } from "react";
-
-interface FormErrors {
-	firstname?: string;
-	lastname?: string;
-	email?: string;
-	password?: string;
-	confirmPassword?: string;
-}
+import { useNavigate } from "react-router-dom";
+import Footer from "../../components/ui/Footer";
+import {
+	type FormErrors,
+	getPasswordStrength,
+	inputSx,
+	strengthColors,
+	strengthLabel,
+	validateForm,
+} from "./registerForm.utils";
 
 export default function Register() {
 	const [firstname, setFirstname] = useState("");
@@ -37,47 +36,23 @@ export default function Register() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [errors, setErrors] = useState<FormErrors>({});
+	const navigate = useNavigate();
 
-	const getPasswordStrength = (myPassword: string) => {
-		let score = 0;
-		if (myPassword.length >= 8) score++;
-		if (/[0-9]/.test(myPassword)) score++;
-		if (/[^a-zA-Z0-9]/.test(myPassword)) score++;
-		if (myPassword.length >= 12) score++;
-		return score;
-	};
-
-	const strengthLabel = ["", "Weak", "Fair", "Good", "Strong"];
-	const strengthColors: ("error" | "warning" | "info" | "success")[] = [
-		"error",
-		"warning",
-		"info",
-		"success",
-	];
 	const score = getPasswordStrength(password);
-
-	const validationPassword = (): FormErrors => {
-		const strongPassword: FormErrors = {};
-		if (!firstname.trim()) strongPassword.firstname = "Required";
-		if (!lastname.trim()) strongPassword.lastname = "Required";
-		if (!email) strongPassword.email = "Email is required";
-		else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-			strongPassword.email = "Invalid email";
-		if (!password) strongPassword.password = "Required";
-		else if (password.length < 8) strongPassword.password = "Min. 8 characters";
-		else if (confirmPassword !== password)
-			strongPassword.confirmPassword = "Password do not match";
-		return strongPassword;
-	};
 
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		const formErrors = validationPassword();
+		const formErrors = validateForm(
+			firstname,
+			lastname,
+			email,
+			password,
+			confirmPassword,
+		);
 		if (Object.keys(formErrors).length > 0) {
 			setErrors(formErrors);
 			return;
 		}
-
 		setErrors({});
 		setIsSubmitting(true);
 	};
@@ -85,163 +60,199 @@ export default function Register() {
 	return (
 		<Box
 			sx={{
-				minHeight: "85vh",
+				minHeight: "100vh",
 				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				p: 2,
+				flexDirection: "column",
+				p: 3,
 			}}
 		>
-			<Paper
-				elevation={3}
-				sx={{ p: 4, width: "100%", maxWidth: 480, borderRadius: 3 }}
+			<Typography variant="h5" fontWeight={800} color="white" letterSpacing={1}>
+				TICKETFLOW
+			</Typography>
+
+			<Box
+				sx={{
+					flex: 1,
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+				}}
 			>
-				{/* Header */}
-				<Typography variant="h5" fontWeight={700} textAlign="center" mb={0.5}>
-					Create your account
-				</Typography>
-				<Typography
-					variant="body2"
-					color="text.secondary"
-					textAlign="center"
-					mb={3}
+				<Paper
+					elevation={0}
+					sx={{
+						p: 4,
+						width: "100%",
+						maxWidth: 480,
+						borderRadius: 3,
+						bgcolor: "rgba(255,255,255,0.15)",
+						backdropFilter: "blur(12px)",
+						border: "1px solid rgba(255,255,255,0.2)",
+					}}
 				>
-					Already have an account?{" "}
-					<Link href="/login" underline="hover">
-						Sign in
-					</Link>
-				</Typography>
-
-				{/* OAuth Buttons */}
-				<Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-					<Button
-						fullWidth
-						variant="outlined"
-						startIcon={<GoogleIcon />}
-						sx={{ textTransform: "none" }}
+					<Typography
+						variant="h5"
+						fontWeight={700}
+						textAlign="center"
+						color="white"
+						mb={0.5}
 					>
-						Google
-					</Button>
-					<Button
-						fullWidth
-						variant="outlined"
-						startIcon={<GitHubIcon />}
-						sx={{ textTransform: "none" }}
-					>
-						GitHub
-					</Button>
-				</Box>
-
-				{/* Divider */}
-				<Divider sx={{ my: 2 }}>
-					<Typography variant="caption" color="text.secondary">
-						or register with email
+						Create your account
 					</Typography>
-				</Divider>
+					<Typography
+						variant="body2"
+						color="rgba(255,255,255,0.6)"
+						textAlign="center"
+						mb={3}
+					>
+						Already have an account?{" "}
+						<Typography
+							component="span"
+							variant="body2"
+							color="white"
+							fontWeight={600}
+							sx={{ cursor: "pointer", textDecoration: "underline" }}
+							onClick={() => navigate("/login")}
+						>
+							Sign in
+						</Typography>
+					</Typography>
 
-				<Box component="form" onSubmit={handleSubmit} noValidate>
-					{/* First name + Last name */}
 					<Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-						<TextField
-							label="First name"
+						<Button
 							fullWidth
-							value={firstname}
-							onChange={(event) => setFirstname(event.target.value)}
-							error={!!errors.firstname}
-							helperText={errors.firstname}
-						/>
-						<TextField
-							label="Last name"
+							variant="outlined"
+							startIcon={<GoogleIcon />}
+							sx={{
+								textTransform: "none",
+								color: "white",
+								borderColor: "rgba(255,255,255,0.3)",
+								"&:hover": { borderColor: "white" },
+							}}
+						>
+							Google
+						</Button>
+						<Button
 							fullWidth
-							value={lastname}
-							onChange={(event) => setLastname(event.target.value)}
-							error={!!errors.lastname}
-							helperText={errors.lastname}
-						/>
+							variant="outlined"
+							startIcon={<GitHubIcon />}
+							sx={{
+								textTransform: "none",
+								color: "white",
+								borderColor: "rgba(255,255,255,0.3)",
+								"&:hover": { borderColor: "white" },
+							}}
+						>
+							GitHub
+						</Button>
 					</Box>
 
-					{/* Email */}
-					<TextField
-						label="Email address"
-						type="email"
-						fullWidth
-						sx={{ mb: 2 }}
-						value={email}
-						onChange={(event) => setEmail(event.target.value)}
-						error={!!errors.email}
-						helperText={errors.email}
-					/>
+					<Divider sx={{ my: 2, borderColor: "rgba(255,255,255,0.2)" }}>
+						<Typography variant="caption" color="rgba(255,255,255,0.6)">
+							or register with email
+						</Typography>
+					</Divider>
 
-					{/* TextField: password with InputAdornment (show/hide toggle) */}
-					<TextField
-						fullWidth
-						label="Password"
-						name="password"
-						type={showPassword ? "text" : "password"}
-						value={password}
-						onChange={(event) => setPassword(event.target.value)}
-						error={!!errors.password}
-						helperText={errors.password || "Min. 8 characters"}
-						sx={{ mb: 1 }}
-						InputProps={{
-							endAdornment: (
-								// InputAdornment + IconButton: the eye icon inside the input
-								<InputAdornment position="end">
-									<IconButton
-										onClick={() => setShowPassword((p) => !p)}
-										edge="end"
-									>
-										{showPassword ? <VisibilityOff /> : <Visibility />}
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-					/>
-
-					{/* Password strength bar */}
-					{password.length > 0 && (
-						<Box sx={{ mb: 2 }}>
-							<LinearProgress
-								variant="determinate"
-								value={(score / 4) * 100}
-								color={strengthColors[score]}
-								sx={{ borderRadius: 2, height: 6 }}
+					<Box component="form" onSubmit={handleSubmit} noValidate>
+						<Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+							<TextField
+								label="First name"
+								fullWidth
+								value={firstname}
+								onChange={(e) => setFirstname(e.target.value)}
+								error={!!errors.firstname}
+								helperText={errors.firstname}
+								sx={inputSx}
 							/>
-							<Typography
-								variant="caption"
-								color={`${strengthColors[score]}.main`}
-								sx={{ mt: 0.5, display: "block" }}
-							>
-								{strengthLabel[score]}
-							</Typography>
+							<TextField
+								label="Last name"
+								fullWidth
+								value={lastname}
+								onChange={(e) => setLastname(e.target.value)}
+								error={!!errors.lastname}
+								helperText={errors.lastname}
+								sx={inputSx}
+							/>
 						</Box>
-					)}
 
-					{/* Confirm Password */}
-					<TextField
-						label="Confirm password"
-						type="password"
-						fullWidth
-						sx={{ mb: 3 }}
-						value={confirmPassword}
-						onChange={(event) => setConfirmPassword(event.target.value)}
-						error={!!errors.confirmPassword}
-						helperText={errors.confirmPassword}
-					/>
+						<TextField
+							label="Email address"
+							type="email"
+							fullWidth
+							sx={{ mb: 2, ...inputSx }}
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							error={!!errors.email}
+							helperText={errors.email}
+						/>
 
-					{/* Submit */}
-					<Button
-						type="submit"
-						variant="contained"
-						fullWidth
-						size="large"
-						disabled={isSubmitting}
-						sx={{ textTransform: "none", fontWeight: 600 }}
-					>
-						{isSubmitting ? "Creating account..." : "Create account"}
-					</Button>
-				</Box>
-			</Paper>
+						<TextField
+							fullWidth
+							label="Password"
+							type={showPassword ? "text" : "password"}
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							error={!!errors.password}
+							helperText={errors.password || "Min. 8 characters"}
+							sx={{ mb: 1, ...inputSx }}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="end">
+										<IconButton
+											onClick={() => setShowPassword((p) => !p)}
+											edge="end"
+											sx={{ color: "rgba(255,255,255,0.7)" }}
+										>
+											{showPassword ? <VisibilityOff /> : <Visibility />}
+										</IconButton>
+									</InputAdornment>
+								),
+							}}
+						/>
+
+						{password.length > 0 && (
+							<Box sx={{ mb: 2 }}>
+								<LinearProgress
+									variant="determinate"
+									value={(score / 4) * 100}
+									color={strengthColors[score]}
+									sx={{ borderRadius: 2, height: 6 }}
+								/>
+								<Typography
+									variant="caption"
+									color={`${strengthColors[score]}.main`}
+									sx={{ mt: 0.5, display: "block" }}
+								>
+									{strengthLabel[score]}
+								</Typography>
+							</Box>
+						)}
+
+						<TextField
+							label="Confirm password"
+							type="password"
+							fullWidth
+							sx={{ mb: 3, ...inputSx }}
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+							error={!!errors.confirmPassword}
+							helperText={errors.confirmPassword}
+						/>
+
+						<Button
+							type="submit"
+							variant="contained"
+							fullWidth
+							size="large"
+							disabled={isSubmitting}
+							sx={{ textTransform: "none", fontWeight: 600 }}
+						>
+							{isSubmitting ? "Creating account..." : "Create account"}
+						</Button>
+					</Box>
+				</Paper>
+			</Box>
+			<Footer />
 		</Box>
 	);
 }

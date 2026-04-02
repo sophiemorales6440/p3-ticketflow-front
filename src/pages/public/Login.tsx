@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/ui/Footer";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
@@ -35,7 +36,7 @@ export default function Login() {
 		setLoading(true);
 
 		try {
-			const userData = await handleLogin({ email: email, password: password });
+			const userData = await handleLogin({ email, password });
 			if (userData.role === "admin") {
 				navigate("/admin/dashboard");
 			} else if (userData.role === "technician") {
@@ -53,95 +54,195 @@ export default function Login() {
 	return (
 		<Box
 			sx={{
-				minHeight: "85vh",
+				minHeight: "100vh",
 				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				p: 2,
+				flexDirection: "column",
+				p: 3,
 			}}
 		>
-			<Paper
-				elevation={3}
-				sx={{ p: 4, width: "100%", maxWidth: 480, borderRadius: 3 }}
+			{/* Logo */}
+			<Typography variant="h5" fontWeight={800} color="white" letterSpacing={1}>
+				TICKETFLOW
+			</Typography>
+
+			{/* Carte login centrée */}
+			<Box
+				sx={{
+					flex: 1,
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+				}}
 			>
-				{/* Header */}
-				<Typography variant="h5" fontWeight={700} textAlign="center" mb={4}>
-					Se connecter à votre compte
-				</Typography>
-
-				{/* OAuth Buttons */}
-				<Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-					<Button
-						fullWidth
-						variant="outlined"
-						startIcon={<GoogleIcon />}
-						sx={{ textTransform: "none" }}
+				<Paper
+					elevation={0}
+					sx={{
+						p: 4,
+						width: "100%",
+						maxWidth: 420,
+						borderRadius: 3,
+						bgcolor: "rgba(255,255,255,0.15)",
+						backdropFilter: "blur(12px)",
+						border: "1px solid rgba(255,255,255,0.2)",
+					}}
+				>
+					{/* Header */}
+					<Typography
+						variant="h5"
+						fontWeight={700}
+						textAlign="center"
+						color="white"
+						mb={4}
 					>
-						Google
-					</Button>
-					<Button
-						fullWidth
-						variant="outlined"
-						startIcon={<GitHubIcon />}
-						sx={{ textTransform: "none" }}
-					>
-						GitHub
-					</Button>
-				</Box>
-
-				{/* Divider */}
-				<Divider sx={{ my: 2 }}>
-					<Typography variant="caption" color="text.secondary">
-						ou se connecter avec votre email
+						Login
 					</Typography>
-				</Divider>
 
-				{error && <Alert severity="error">{error}</Alert>}
+					{error && (
+						<Alert severity="error" sx={{ mb: 2 }}>
+							{error}
+						</Alert>
+					)}
 
-				<Box component="form" onSubmit={handleSubmit} noValidate>
-					{/* Email */}
-					<TextField
-						label="Email address"
-						type="email"
-						fullWidth
-						sx={{ mb: 2 }}
-						value={email}
-						onChange={(event) => setEmail(event.target.value)}
-					/>
-					<TextField
-						fullWidth
-						label="Password"
-						name="password"
-						type={showPassword ? "text" : "password"}
-						value={password}
-						onChange={(event) => setPassword(event.target.value)}
-						sx={{ mb: 4 }}
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position="end">
-									<IconButton
-										onClick={() => setShowPassword((p) => !p)}
-										edge="end"
-									>
-										{showPassword ? <VisibilityOff /> : <Visibility />}
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-					/>
+					<Box component="form" onSubmit={handleSubmit} noValidate>
+						{/* Email */}
+						<TextField
+							label="Email"
+							type="email"
+							fullWidth
+							sx={{
+								mb: 2,
+								"& .MuiOutlinedInput-root": {
+									bgcolor: "rgba(255,255,255,0.1)",
+									color: "white",
+									"& fieldset": {
+										borderColor: "rgba(255,255,255,0.3)",
+									},
+									"&:hover fieldset": {
+										borderColor: "rgba(255,255,255,0.6)",
+									},
+									"&.Mui-focused fieldset": {
+										borderColor: "white",
+									},
+								},
+								"& .MuiInputLabel-root": { color: "rgba(255,255,255,0.7)" },
+								"& .MuiInputLabel-root.Mui-focused": { color: "white" },
+							}}
+							value={email}
+							onChange={(event) => setEmail(event.target.value)}
+						/>
 
-					<Button
-						type="submit"
-						variant="contained"
-						fullWidth
-						size="large"
-						disabled={loading}
-						sx={{ textTransform: "none", fontWeight: 600 }}
+						{/* Password */}
+						<TextField
+							fullWidth
+							label="Password"
+							type={showPassword ? "text" : "password"}
+							value={password}
+							onChange={(event) => setPassword(event.target.value)}
+							sx={{
+								mb: 3,
+								"& .MuiOutlinedInput-root": {
+									bgcolor: "rgba(255,255,255,0.1)",
+									color: "white",
+									"& fieldset": {
+										borderColor: "rgba(255,255,255,0.3)",
+									},
+									"&:hover fieldset": {
+										borderColor: "rgba(255,255,255,0.6)",
+									},
+									"&.Mui-focused fieldset": {
+										borderColor: "white",
+									},
+								},
+								"& .MuiInputLabel-root": { color: "rgba(255,255,255,0.7)" },
+								"& .MuiInputLabel-root.Mui-focused": { color: "white" },
+							}}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="end">
+										<IconButton
+											onClick={() => setShowPassword((p) => !p)}
+											edge="end"
+											sx={{ color: "rgba(255,255,255,0.7)" }}
+										>
+											{showPassword ? <VisibilityOff /> : <Visibility />}
+										</IconButton>
+									</InputAdornment>
+								),
+							}}
+						/>
+
+						<Button
+							type="submit"
+							variant="contained"
+							fullWidth
+							size="large"
+							disabled={loading}
+							sx={{ textTransform: "none", fontWeight: 600, mb: 2 }}
+						>
+							{loading ? "Connexion..." : "Sign in"}
+						</Button>
+					</Box>
+
+					{/* Divider */}
+					<Divider sx={{ my: 2, borderColor: "rgba(255,255,255,0.2)" }}>
+						<Typography variant="caption" color="rgba(255,255,255,0.6)">
+							or continue with
+						</Typography>
+					</Divider>
+
+					{/* OAuth Buttons */}
+					<Box sx={{ display: "flex", gap: 2 }}>
+						<Button
+							fullWidth
+							variant="outlined"
+							startIcon={<GoogleIcon />}
+							sx={{
+								textTransform: "none",
+								color: "white",
+								borderColor: "rgba(255,255,255,0.3)",
+								"&:hover": { borderColor: "white" },
+							}}
+						>
+							Google
+						</Button>
+						<Button
+							fullWidth
+							variant="outlined"
+							startIcon={<GitHubIcon />}
+							sx={{
+								textTransform: "none",
+								color: "white",
+								borderColor: "rgba(255,255,255,0.3)",
+								"&:hover": { borderColor: "white" },
+							}}
+						>
+							GitHub
+						</Button>
+					</Box>
+
+					{/* Lien register */}
+					<Typography
+						variant="caption"
+						color="rgba(255,255,255,0.6)"
+						textAlign="center"
+						display="block"
+						mt={2}
 					>
-						{loading ? "Connexion..." : "Se connecter"}
-					</Button>
-				</Box>
-			</Paper>
+						Don't have an account?{" "}
+						<Typography
+							component="span"
+							variant="caption"
+							color="white"
+							fontWeight={600}
+							sx={{ cursor: "pointer", textDecoration: "underline" }}
+							onClick={() => navigate("/register")}
+						>
+							Register to You
+						</Typography>
+					</Typography>
+				</Paper>
+			</Box>
+			<Footer />
 		</Box>
 	);
 }

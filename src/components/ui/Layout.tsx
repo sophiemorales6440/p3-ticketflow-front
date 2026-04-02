@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
@@ -48,6 +49,7 @@ export default function Layout({ children }: Props) {
 				>
 					{children}
 				</Box>
+				<Footer />
 			</Box>
 		</Box>
 	);
