@@ -181,6 +181,12 @@ export default function TicketTable({
 								key={ticket.id}
 								hover
 								selected={selectedTicketId === ticket.id}
+								sx={{
+									bgcolor:
+										ticket.technician_id == null || ticket.technician_id === 0
+											? "rgba(239, 68, 68, 0.20)"
+											: "inherit",
+								}}
 							>
 								<TableCell
 									sx={{
@@ -229,6 +235,14 @@ export default function TicketTable({
 									{timeAgo(ticket.created_at)}
 								</TableCell>
 								<TableCell>
+									{(!ticket.technician_id || ticket.technician_id === 0) && (
+										<Chip
+											label="Non assigné"
+											color="error"
+											size="small"
+											sx={{ mr: 1 }}
+										/>
+									)}
 									<IconButton
 										size="small"
 										onClick={() => onSelectTicket(ticket)}
