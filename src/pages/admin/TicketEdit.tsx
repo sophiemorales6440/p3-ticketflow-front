@@ -75,6 +75,112 @@ export default function TicketEdit() {
 	}, [id]);
 
 	return (
+		<Box sx={{ maxWidth: 1100, mx: "auto", px: 3, py: 4 }}>
+      {/* Header */}
+      <Typography variant="overline" color="text.secondary">
+        Ticket #{id}
+      </Typography>
+      <Typography variant="h5" fontWeight={600} mb={3}>
+        Modifier le ticket
+      </Typography>
 
+      {/* Layout 2 colonnes */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          gap: 3,
+          alignItems: "start",
+        }}
+      >
+        {/* Colonne gauche — Formulaire */}
+        <Paper
+          elevation={0}
+          variant="outlined"
+          sx={{ p: 3, borderRadius: 2 }}
+          component="form"
+          onSubmit={handleSubmit}
+        >
+          <Typography variant="subtitle1" fontWeight={600} mb={2}>
+            Informations
+          </Typography>
+
+          <Stack spacing={2}>
+            <TextField
+              label="Titre"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <TextField
+              label="Description"
+              fullWidth
+              multiline
+              minRows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <TextField
+              select
+              label="Statut"
+              fullWidth
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <MenuItem value="open">Ouvert</MenuItem>
+              <MenuItem value="in_progress">En cours</MenuItem>
+              <MenuItem value="resolved">Résolu</MenuItem>
+              <MenuItem value="closed">Fermé</MenuItem>
+            </TextField>
+            <TextField
+              select
+              label="Priorité"
+              fullWidth
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
+              <MenuItem value="low">Basse</MenuItem>
+              <MenuItem value="medium">Moyenne</MenuItem>
+              <MenuItem value="high">Haute</MenuItem>
+              <MenuItem value="critical">Critique</MenuItem>
+            </TextField>
+            <TextField
+              select
+              label="Catégorie"
+              fullWidth
+              value={category_id}
+              onChange={(e) => setCategoryId(e.target.value)}
+            >
+              <MenuItem value="1">Logiciel</MenuItem>
+              <MenuItem value="2">Matériel</MenuItem>
+              <MenuItem value="3">Réseau</MenuItem>
+              <MenuItem value="4">Autre</MenuItem>
+            </TextField>
+          </Stack>
+
+          {/* Actions */}
+          <Divider sx={{ my: 3 }} />
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Button type="submit" variant="contained" color="primary">
+              Enregistrer
+            </Button>
+            <Button
+              variant="text"
+              color="error"
+              size="small"
+              onClick={handleDelete}
+            >
+              Supprimer le ticket
+            </Button>
+          </Box>
+        </Paper>
+
+        {/* Colonne droite — Pièces jointes + Commentaires */}
+        <Stack spacing={3}>
+          <AttachmentsPanel ticketId={String(id)} />
+          <Comments ticketId={Number(id)} />
+        </Stack>
+      </Box>
+    </Box>
 	);
 }
