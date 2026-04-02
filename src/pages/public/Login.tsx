@@ -60,12 +60,7 @@ export default function Login() {
 			}}
 		>
 			{/* Logo */}
-			<Typography
-				variant="h5"
-				fontWeight={800}
-				color="white"
-				letterSpacing={1}
-			>
+			<Typography variant="h5" fontWeight={800} color="white" letterSpacing={1}>
 				TICKETFLOW
 			</Typography>
 
@@ -101,7 +96,11 @@ export default function Login() {
 						Login
 					</Typography>
 
-					{error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+					{error && (
+						<Alert severity="error" sx={{ mb: 2 }}>
+							{error}
+						</Alert>
+					)}
 
 					<Box component="form" onSubmit={handleSubmit} noValidate>
 						{/* Email */}
