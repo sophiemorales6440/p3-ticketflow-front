@@ -54,7 +54,7 @@ export default function Tickets() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetchWithToken("http://localhost:3310/api/tickets/")
+		fetchWithToken(`${import.meta.env.VITE_API_URL}/api/tickets/`)
 			.then((response) => response.json())
 			.then((data) => setTicket(data))
 			.catch((error) => console.error(error));

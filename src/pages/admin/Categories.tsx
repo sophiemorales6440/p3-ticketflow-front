@@ -26,7 +26,7 @@ export default function Categories() {
 	const [name, setName] = useState("");
 	const handleAdd = async () => {
 		const newData = { name };
-		await fetchWithToken("http://localhost:3310/api/categories/", {
+		await fetchWithToken(`${import.meta.env.VITE_API_URL}/api/categories/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default function Categories() {
 		SetIsUpdate(true);
 	};
 	useEffect(() => {
-		fetchWithToken("http://localhost:3310/api/categories/")
+		fetchWithToken(`${import.meta.env.VITE_API_URL}/api/categories/`)
 			.then((response) => response.json())
 			.then((data) => setCategories(data))
 			.then(() => SetIsUpdate(false))

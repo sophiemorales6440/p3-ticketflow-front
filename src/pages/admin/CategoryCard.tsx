@@ -17,7 +17,7 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 	};
 	const handleDelete = async () => {
 		const response = await fetch(
-			`http://localhost:3310/api/categories/${category.id}`,
+			`${import.meta.env.VITE_API_URL}/api/categories/${category.id}`,
 			{
 				method: "DELETE",
 				headers: {
@@ -32,7 +32,7 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 	const handleSave = async () => {
 		const newData = { id: category.id, name: name || category.name };
 		const response = await fetch(
-			`http://localhost:3310/api/categories/${category.id}`,
+			`${import.meta.env.VITE_API_URL}/api/categories/${category.id}`,
 			{
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },

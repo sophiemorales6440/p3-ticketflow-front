@@ -34,7 +34,7 @@ export default function Users() {
 	const [activeTab, setActiveTab] = useState(0);
 
 	useEffect(() => {
-		fetchWithToken("http://localhost:3310/api/users/")
+		fetchWithToken(`${import.meta.env.VITE_API_URL}/api/users/`)
 			.then((response) => response.json())
 			.then((data) => setUsers(data))
 			.catch((error) => console.error(error));

@@ -37,7 +37,7 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 		setError(null);
 		try {
 			const res = await fetchWithToken(
-				`http://localhost:3310/api/tickets/${ticketId}/attachments`,
+				`${import.meta.env.VITE_API_URL}/api/tickets/${ticketId}/attachments`,
 			);
 			if (!res.ok) throw new Error("Erreur lors du chargement");
 			const data = await res.json();
@@ -63,7 +63,7 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 				setError(null);
 				try {
 					const res = await fetchWithToken(
-						`http://localhost:3310/api/attachments/tickets/${ticketId}/attachments`,
+						`${import.meta.env.VITE_API_URL}/api/attachments/tickets/${ticketId}/attachments`,
 						{
 							method: "POST",
 							headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 		if (!confirm("Supprimer cette pièce jointe ?")) return;
 		try {
 			const res = await fetchWithToken(
-				`http://localhost:3310/api/attachments/attachments/${id}`,
+				`${import.meta.env.VITE_API_URL}/api/attachments/attachments/${id}`,
 				{ method: "DELETE" },
 			);
 			if (!res.ok) throw new Error("Impossible de supprimer");

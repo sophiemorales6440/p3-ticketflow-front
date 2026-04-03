@@ -37,12 +37,15 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 	};
 
 	const handleDelete = async () => {
-		const response = await fetch(`http://localhost:3310/api/users/${user.id}`, {
-			method: "DELETE",
-			headers: {
-				"content-Type": "application/json",
+		const response = await fetch(
+			`${import.meta.env.VITE_API_URL}/api/users/${user.id}`,
+			{
+				method: "DELETE",
+				headers: {
+					"content-Type": "application/json",
+				},
 			},
-		});
+		);
 
 		if (response.ok) {
 			SetIsUpdate((prev) => !prev);
@@ -59,7 +62,7 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 		};
 
 		const response = await fetchWithToken(
-			`http://localhost:3310/api/users/${user.id}`,
+			`${import.meta.env.VITE_API_URL}/api/users/${user.id}`,
 			{
 				method: "PUT",
 				headers: {
