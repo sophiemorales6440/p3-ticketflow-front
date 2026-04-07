@@ -30,7 +30,7 @@ export default function TicketEdit() {
 
 	const handleDelete = async () => {
 		if (!window.confirm("Supprimer ce ticket définitivement ?")) return;
-		await fetchWithToken(`http://localhost:3310/api/tickets/${id}`, {
+		await fetchWithToken(`${import.meta.env.VITE_API_URL}/api/tickets/${id}`, {
 			method: "DELETE",
 		});
 		redirectActionUser();
@@ -45,7 +45,7 @@ export default function TicketEdit() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		await fetchWithToken(`http://localhost:3310/api/tickets/${id}`, {
+		await fetchWithToken(`${import.meta.env.VITE_API_URL}/api/tickets/${id}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
@@ -62,7 +62,7 @@ export default function TicketEdit() {
 	};
 
 	useEffect(() => {
-		fetchWithToken(`http://localhost:3310/api/tickets/${id}`)
+		fetchWithToken(`${import.meta.env.VITE_API_URL}/api/tickets/${id}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setTitle(data.title);

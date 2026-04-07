@@ -14,7 +14,9 @@ export default function TechnicienDashboard() {
 
 	useEffect(() => {
 		if (!user?.id) return;
-		fetchWithToken(`http://localhost:3310/api/tickets/technician/${user.id}`)
+		fetchWithToken(
+			`${import.meta.env.VITE_API_URL}/api/tickets/technician/${user.id}`,
+		)
 			.then((res) => res.json())
 			.then((data) => setTickets(data))
 			.catch((err) => console.error(err));

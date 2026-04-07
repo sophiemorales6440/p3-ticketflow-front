@@ -43,7 +43,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 	useEffect(() => {
 		const afficheComments = async () => {
 			const response = await fetchWithToken(
-				`http://localhost:3310/api/comments/ticket/${ticketId}`,
+				`${import.meta.env.VITE_API_URL}/api/comments/ticket/${ticketId}`,
 			);
 			const data = await response.json();
 			setComment(data);
@@ -53,7 +53,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 
 	const handleDelete = async (id: number) => {
 		const response = await fetchWithToken(
-			`http://localhost:3310/api/comments/${id}`,
+			`${import.meta.env.VITE_API_URL}/api/comments/${id}`,
 			{
 				method: "DELETE",
 			},
@@ -65,7 +65,7 @@ export default function Comments({ ticketId }: CommentsProps) {
 
 	const sendMessage = async () => {
 		const response = await fetchWithToken(
-			`http://localhost:3310/api/comments`,
+			`${import.meta.env.VITE_API_URL}/api/comments`,
 			{
 				method: "POST",
 				body: JSON.stringify({

@@ -53,13 +53,16 @@ export default function AuthProvider({
 	const handleLogin = async (infos: LoginInfos): Promise<User> => {
 		const newData = { email: infos.email, password: infos.password };
 
-		const response = await fetch("http://localhost:3310/api/auth/signin", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		const response = await fetch(
+			`${import.meta.env.VITE_API_URL}/api/auth/signin`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newData),
 			},
-			body: JSON.stringify(newData),
-		});
+		);
 		if (!response.ok) {
 			throw new Error("fonctionne pas");
 		}

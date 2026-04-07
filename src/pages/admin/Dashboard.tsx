@@ -25,14 +25,14 @@ export default function Dashboard() {
 	const [selectedTicket, setSelectedTicket] = useState<TicketType | null>(null);
 
 	useEffect(() => {
-		fetchWithToken("http://localhost:3310/api/tickets/")
+		fetchWithToken(`${import.meta.env.VITE_API_URL}/api/tickets/`)
 			.then((response) => response.json())
 			.then((data) => setTickets(data))
 			.catch((error) => console.error(error));
 	}, []);
 
 	useEffect(() => {
-		fetchWithToken("http://localhost:3310/api/users/")
+		fetchWithToken(`${import.meta.env.VITE_API_URL}/api/users/`)
 			.then((response) => response.json())
 			.then((data) => setUsers(data))
 			.catch((error) => console.error(error));

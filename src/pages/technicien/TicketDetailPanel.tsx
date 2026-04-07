@@ -35,33 +35,39 @@ export default function TicketDetailPanel({
 	onTechnicianChange,
 }: Props) {
 	const handleStatusChange = async (newStatus: string) => {
-		await fetchWithToken(`http://localhost:3310/api/tickets/${ticket.id}`, {
-			method: "PUT",
-			body: JSON.stringify({
-				title: ticket.title,
-				description: ticket.description,
-				status: newStatus,
-				priority: ticket.priority,
-				client_id: ticket.client_id,
-				technician_id: ticket.technician_id,
-				category_id: ticket.category_id,
-			}),
-		});
+		await fetchWithToken(
+			`${import.meta.env.VITE_API_URL}/api/tickets/${ticket.id}`,
+			{
+				method: "PUT",
+				body: JSON.stringify({
+					title: ticket.title,
+					description: ticket.description,
+					status: newStatus,
+					priority: ticket.priority,
+					client_id: ticket.client_id,
+					technician_id: ticket.technician_id,
+					category_id: ticket.category_id,
+				}),
+			},
+		);
 		onStatusChange(ticket.id, newStatus);
 	};
 	const handleTechnicianChange = async (newTechnicianId: number) => {
-		await fetchWithToken(`http://localhost:3310/api/tickets/${ticket.id}`, {
-			method: "PUT",
-			body: JSON.stringify({
-				title: ticket.title,
-				description: ticket.description,
-				status: ticket.status,
-				priority: ticket.priority,
-				client_id: ticket.client_id,
-				technician_id: newTechnicianId,
-				category_id: ticket.category_id,
-			}),
-		});
+		await fetchWithToken(
+			`${import.meta.env.VITE_API_URL}/api/tickets/${ticket.id}`,
+			{
+				method: "PUT",
+				body: JSON.stringify({
+					title: ticket.title,
+					description: ticket.description,
+					status: ticket.status,
+					priority: ticket.priority,
+					client_id: ticket.client_id,
+					technician_id: newTechnicianId,
+					category_id: ticket.category_id,
+				}),
+			},
+		);
 		onTechnicianChange(ticket.id, newTechnicianId);
 	};
 
