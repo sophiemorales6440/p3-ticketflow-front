@@ -11,10 +11,9 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchWithToken } from "../../utils/api";
-import { Eye } from "lucide-react";
-
 
 interface UserType {
     id: number;
@@ -25,11 +24,25 @@ interface UserType {
     password: string;
 }
 
+interface TicketType {
+    id: number;
+    title: string;
+    status: string;
+    priority: string;
+    category_id: number;
+    category_name: string;
+    created_at: string;
+    resolved_at: string | null;
+}
+
 export default function Technicians() {
     const [technicians, setTechnicians] = useState<UserType[]>([]);
     const [isUpdate, SetIsUpdate] = useState(false);
     const [search, setSearch] = useState("");
-    const [selectedTechnician, setSelectedTechnician] = useState<UserType | null>(null);
+    const [selectedTechnician, setSelectedTechnician] = useState<UserType | null>(
+        null,
+    );
+    const [tickets, setTickets] = useState<TicketType[]>([])
 
     useEffect(() => {
         fetchWithToken(`${import.meta.env.VITE_API_URL}/api/users/`)
@@ -39,6 +52,15 @@ export default function Technicians() {
             )
             .catch((error) => console.error(error));
     }, [isUpdate]);
+
+    useEffect(() => {
+        if (!selectedTechnician) return;
+        fetchWithToken(`${import.meta.env.VITE_API_URL}/api/users/${selectedTechnician.id}/tickets`)
+            .then((response) => response.json())
+            .then((data) => setTickets(data))
+            .catch((error) => console.error(error));
+    }, [selectedTechnician])
+
 
     const filteredTechnicians = technicians.filter(
         (user) =>
@@ -100,7 +122,7 @@ export default function Technicians() {
                                 <TableCell>{technician.role}</TableCell>
                                 <TableCell>
                                     <IconButton onClick={() => setSelectedTechnician(technician)}>
-                                        <Eye size={18}/>
+                                        <Eye size={18} />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
@@ -108,6 +130,25 @@ export default function Technicians() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            {selectedTechnician && (
+                <Box sx={{ mt: 3, p: 2, bgcolor: "black", borderRadius: 2 }}>
+                    <Typography variant="h6">
+                        Tickets de {selectedTechnician.firstname} {selectedTechnician.lastname}
+                    </Typography>
+                    {tickets.map((ticket) => (
+                        <Box key={ticket.id}>
+                            <Typography>{ticket.title}</Typography>
+                            <Typography>{ticket.status}</Typography>
+                            <Typography>{ticket.priority}</Typography>
+                            <Typography>{ticket.category_id}</Typography>
+                            <Typography>{ticket.category_name}</Typography>
+                        </Box>
+                    ))}
+                </Box>
+            )}
+
         </Box>
     );
 }
+
+
