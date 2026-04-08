@@ -11,14 +11,12 @@ import {
 	MenuItem,
 	Paper,
 	Select,
-	Tab,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	Tabs,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -96,6 +94,19 @@ export default function TicketTable({
 						}}
 					/>
 					<FormControl size="small" sx={{ minWidth: 140 }}>
+						<InputLabel>État</InputLabel>
+						<Select
+							value={tabStatus}
+							label="État"
+							onChange={(e) => setTabStatus(e.target.value)}
+						>
+							<MenuItem value="all">Tous</MenuItem>
+							<MenuItem value="in_progress">En cours</MenuItem>
+							<MenuItem value="open">En attente</MenuItem>
+							<MenuItem value="resolved">Résolus</MenuItem>
+						</Select>
+					</FormControl>
+					<FormControl size="small" sx={{ minWidth: 140 }}>
 						<InputLabel>Priorité</InputLabel>
 						<Select
 							value={filterPriority}
@@ -123,36 +134,14 @@ export default function TicketTable({
 						</Select>
 					</FormControl>
 				</Box>
-				<Tabs
-					value={tabStatus}
-					onChange={(_, v) => setTabStatus(v)}
-					TabIndicatorProps={{ style: { height: 2 } }}
-				>
-					{["all", "in_progress", "open", "resolved"].map((s) => (
-						<Tab
-							key={s}
-							value={s}
-							label={
-								s === "all"
-									? "Tous"
-									: s === "in_progress"
-										? "En cours"
-										: s === "open"
-											? "En attente"
-											: "Résolus"
-							}
-							sx={{ textTransform: "none", fontSize: 13 }}
-						/>
-					))}
-				</Tabs>
 			</Box>
 
 			<Divider />
 
-			<TableContainer>
+			<TableContainer sx={{ maxHeight: 400, overflow: "auto" }}>
 				<Table size="small">
 					<TableHead>
-						<TableRow sx={{ bgcolor: "grey.50" }}>
+						<TableRow sx={{ bgcolor: "#e8f0fe" }}>
 							{[
 								"N°",
 								"Sujet",
@@ -190,15 +179,15 @@ export default function TicketTable({
 							>
 								<TableCell
 									sx={{
-										fontSize: 13,
+										fontSize: 14,
 										fontWeight: 600,
 										color: "primary.main",
 									}}
 								>
 									#{ticket.id}
 								</TableCell>
-								<TableCell sx={{ fontSize: 13 }}>{ticket.title}</TableCell>
-								<TableCell sx={{ fontSize: 13 }}>
+								<TableCell sx={{ fontSize: 14 }}>{ticket.title}</TableCell>
+								<TableCell sx={{ fontSize: 14 }}>
 									{ticket.category_name}
 								</TableCell>
 								<TableCell>

@@ -61,7 +61,7 @@ export default function Login() {
 			}}
 		>
 			{/* Logo */}
-			<Typography variant="h5" fontWeight={800} color="white" letterSpacing={1}>
+			<Typography variant="h4" fontWeight={800} color="white" letterSpacing={1}>
 				TICKETFLOW
 			</Typography>
 
