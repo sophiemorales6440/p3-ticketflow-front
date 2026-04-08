@@ -158,7 +158,7 @@ export default function Dashboard() {
 					>
 						Répartition par statut
 					</Typography>
-					<ResponsiveContainer width="100%" height={220}>
+					<ResponsiveContainer width="100%" height={200}>
 						<PieChart>
 							<Pie
 								data={stats}
@@ -166,7 +166,7 @@ export default function Dashboard() {
 								nameKey="label"
 								cx="50%"
 								cy="50%"
-								outerRadius={80}
+								outerRadius={70}
 							>
 								{stats.map((stat) => (
 									<Cell key={stat.label} fill={stat.color} />
@@ -187,7 +187,7 @@ export default function Dashboard() {
 					>
 						Répartition par priorité
 					</Typography>
-					<ResponsiveContainer width="100%" height={220}>
+					<ResponsiveContainer width="100%" height={200}>
 						<PieChart>
 							<Pie
 								data={[
@@ -212,7 +212,7 @@ export default function Dashboard() {
 								nameKey="label"
 								cx="50%"
 								cy="50%"
-								outerRadius={80}
+								outerRadius={70}
 							>
 								{[
 									{ label: "Haut", color: "#ef4444" },
@@ -252,7 +252,15 @@ export default function Dashboard() {
 					</ResponsiveContainer>
 				</Box>
 			</Box>
-
+			<Typography
+				variant="h5"
+				fontWeight={800}
+				letterSpacing={1}
+				gutterBottom
+				sx={{ mt: 4 }}
+			>
+				Tickets
+			</Typography>
 			<TicketTable
 				tickets={tickets}
 				selectedTicketId={selectedTicket?.id ?? null}
@@ -274,22 +282,44 @@ export default function Dashboard() {
 				)}
 			</Drawer>
 
-			<Typography variant="h5" fontWeight={600} gutterBottom sx={{ mt: 5 }}>
+			<Typography
+				variant="h5"
+				fontWeight={800}
+				letterSpacing={1}
+				gutterBottom
+				sx={{ mt: 5 }}
+			>
 				Techniciens
 			</Typography>
 			<TableContainer
 				component={Box}
-				sx={{ p: 2, bgcolor: "background.paper", borderRadius: 2 }}
+				sx={{
+					p: 2,
+					bgcolor: "background.paper",
+					borderRadius: 2,
+					maxHeight: 400,
+					overflow: "auto",
+				}}
 			>
 				<Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
 					{technicians.length} technicien{technicians.length > 1 ? "s" : ""}
 				</Typography>
 				<Table>
 					<TableHead>
-						<TableRow>
-							<TableCell sx={{ fontWeight: "bold" }}>Nom</TableCell>
-							<TableCell sx={{ fontWeight: "bold" }}>Prénom</TableCell>
-							<TableCell sx={{ fontWeight: "bold" }}>
+						<TableRow sx={{ bgcolor: "#e8f0fe" }}>
+							<TableCell
+								sx={{ fontWeight: 600, fontSize: 14, color: "text.secondary" }}
+							>
+								Nom
+							</TableCell>
+							<TableCell
+								sx={{ fontWeight: 600, fontSize: 14, color: "text.secondary" }}
+							>
+								Prénom
+							</TableCell>
+							<TableCell
+								sx={{ fontWeight: 600, fontSize: 14, color: "text.secondary" }}
+							>
 								Tickets assignés
 							</TableCell>
 						</TableRow>
