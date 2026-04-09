@@ -27,6 +27,7 @@ export default function Layout({ children }: Props) {
 			<Box
 				sx={{
 					flex: 1,
+					minWidth: 0,
 					display: "flex",
 					flexDirection: "column",
 				}}
@@ -38,12 +39,15 @@ export default function Layout({ children }: Props) {
 				<Box
 					sx={{
 						flex: 1,
+						minWidth: 0,
+						display: "flex",
+						flexDirection: "column",
+						overflow: "hidden",
 						m: 2,
 						borderRadius: 3,
 						bgcolor: "rgba(255,255,255,0.15)",
 						backdropFilter: "blur(12px)",
 						border: "1px solid rgba(255,255,255,0.2)",
-						overflow: "auto",
 						p: 2,
 					}}
 				>

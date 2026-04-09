@@ -120,14 +120,14 @@ export default function Dashboard() {
 	};
 
 	return (
-		<Box sx={{ p: 3 }}>
+		<Box sx={{ p: { xs: 2, sm: 3 } }}>
 			<Typography variant="h4" gutterBottom>
 				DASHBOARD ADMIN
 			</Typography>
 			<Box
 				sx={{
 					display: "grid",
-					gridTemplateColumns: "repeat(4, 1fr)",
+					gridTemplateColumns: { xs: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
 					gap: 2,
 					mb: 4,
 				}}
@@ -144,12 +144,12 @@ export default function Dashboard() {
 			<Box
 				sx={{
 					display: "grid",
-					gridTemplateColumns: "1fr 1fr 2fr",
+					gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 2fr" },
 					gap: 2,
 					mb: 4,
 				}}
 			>
-				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3 }}>
+				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3, minWidth: 0 }}>
 					<Typography
 						variant="h6"
 						fontWeight={600}
@@ -178,7 +178,7 @@ export default function Dashboard() {
 					</ResponsiveContainer>
 				</Box>
 
-				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3 }}>
+				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3, minWidth: 0 }}>
 					<Typography
 						variant="h6"
 						fontWeight={600}
@@ -227,7 +227,7 @@ export default function Dashboard() {
 						</PieChart>
 					</ResponsiveContainer>
 				</Box>
-				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3 }}>
+				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3, minWidth: 0 }}>
 					<Typography
 						variant="h6"
 						fontWeight={600}
@@ -261,11 +261,17 @@ export default function Dashboard() {
 			>
 				Tickets
 			</Typography>
-			<TicketTable
-				tickets={tickets}
-				selectedTicketId={selectedTicket?.id ?? null}
-				onSelectTicket={setSelectedTicket}
-			/>
+			<Box
+				sx={{
+					overflowX: "auto",
+				}}
+			>
+				<TicketTable
+					tickets={tickets}
+					selectedTicketId={selectedTicket?.id ?? null}
+					onSelectTicket={setSelectedTicket}
+				/>
+			</Box>
 			<Drawer
 				anchor="right"
 				open={!!selectedTicket}
