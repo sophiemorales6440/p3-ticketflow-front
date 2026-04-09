@@ -6,6 +6,7 @@ import { useAuth } from "./context/AuthContext";
 import About from "./pages/About";
 import Categories from "./pages/admin/Categories";
 import Dashboard from "./pages/admin/Dashboard";
+import Statistics from "./pages/admin/Statistics";
 import Technicians from "./pages/admin/Technicians";
 import TicketEdit from "./pages/admin/TicketEdit";
 import TicketForm from "./pages/admin/TicketForm";
@@ -42,6 +43,7 @@ function AppRoutes() {
 				<Route path="/admin/dashboard" element={<Dashboard />} />
 				<Route path="/technician/dashboard" element={<TechnicienDashboard />} />
 				<Route path="/client/dashboard" element={<ClientDashboard />} />
+				<Route path="/statistics" element={<Statistics />} />
 				<Route
 					path="*"
 					element={
