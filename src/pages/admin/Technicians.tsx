@@ -3,6 +3,7 @@ import {
 	IconButton,
 	Paper,
 	Table,
+	Chip,
 	TableBody,
 	TableCell,
 	TableContainer,
@@ -71,6 +72,20 @@ export default function Technicians() {
 			user.email.toLowerCase().includes(search.toLowerCase()),
 	);
 
+	const statusColor = (status: string) => {
+		if (status === "open") return "info";
+		if (status === "closed") return "success";
+		if (status === "pending") return "warning";
+		return "default";
+	};
+
+	const priorityColor = (priority: string) => {
+		if (priority === "high") return "error";
+		if (priority === "medium") return "warning";
+		if (priority === "low") return "success";
+		return "default";
+	};
+
 	return (
 		<Box sx={{ p: 3 }}>
 			<Typography variant="h4" gutterBottom>
@@ -133,18 +148,37 @@ export default function Technicians() {
 				</Table>
 			</TableContainer>
 			{selectedTechnician && (
-				<Box sx={{ mt: 3, p: 2, bgcolor: "black", borderRadius: 2 }}>
-					<Typography variant="h6">
-						Tickets de {selectedTechnician.firstname}{" "}
-						{selectedTechnician.lastname}
+				<Box sx={{
+					mt: 3, p: 2.5,
+					bgcolor: "background.paper",
+					border: "0.5px solid",
+					borderColor: "divider",
+					borderRadius: 3,
+				}}>
+					<Typography variant="h6" sx={{ mb: 2, fontWeight: 500, color: "text.primary" }}>
+						Tickets de {selectedTechnician.firstname} {selectedTechnician.lastname}
 					</Typography>
+
 					{tickets.map((ticket) => (
-						<Box key={ticket.id}>
-							<Typography>{ticket.title}</Typography>
-							<Typography>{ticket.status}</Typography>
-							<Typography>{ticket.priority}</Typography>
-							<Typography>{ticket.category_id}</Typography>
-							<Typography>{ticket.category_name}</Typography>
+						<Box key={ticket.id} sx={{
+							p: 1.5,
+							mb: 1.25,
+							bgcolor: "background.default",
+							border: "0.5px solid",
+							borderColor: "divider",
+							borderRadius: 2,
+							"&:hover": { borderColor: "text.disabled" },
+							"&:last-child": { mb: 0 },
+						}}>
+							<Typography variant="body2" sx={{ fontWeight: 500, mb: 0.75, color: "text.primary" }}>
+								{ticket.title}
+							</Typography>
+
+							<Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+								<Chip label={ticket.status} size="small" color={statusColor(ticket.status)} />
+								<Chip label={ticket.priority} size="small" color={priorityColor(ticket.priority)} />
+								<Chip label={ticket.category_name} size="small" variant="outlined" />
+							</Box>
 						</Box>
 					))}
 				</Box>
