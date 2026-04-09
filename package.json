@@ -35,5 +35,8 @@
 		"husky": "^9.1.7",
 		"typescript": "latest",
 		"vite": "^8.0.8"
+	},
+	"overrides": {
+		"vite": "^6.0.0"
 	}
 }
