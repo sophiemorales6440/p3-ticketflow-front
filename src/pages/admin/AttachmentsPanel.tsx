@@ -53,10 +53,15 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 		if (ticketId) fetchAttachments();
 	}, [ticketId, fetchAttachments]);
 
+
+
 	const handleFileSelect = useCallback(
 		(files: FileList | null) => {
 			if (!files || files.length === 0) return;
 			const file = files[0];
+
+			const formData = new FormData();
+			formData.append("file", file)
 
 			void (async () => {
 				setUploading(true);
@@ -66,11 +71,7 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 						`${import.meta.env.VITE_API_URL}/api/attachments/tickets/${ticketId}/attachments`,
 						{
 							method: "POST",
-							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify({
-								filename: file.name,
-								url: `/uploads/${file.name}`,
-							}),
+							body: formData,
 						},
 					);
 
@@ -157,9 +158,9 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 						>
 							<ListItemText
 								primary={
-									<span style={{ color: "#1976d2", fontWeight: 800 }}>
+									<a style={{ color: "#1976d2", fontWeight: 800 }} href={att.url} download={att.filename}>
 										{att.filename}
-									</span>
+									</a>
 								}
 								secondary={
 									att.createdAt
