@@ -34,6 +34,6 @@
 		"@vitejs/plugin-react": "latest",
 		"husky": "^9.1.7",
 		"typescript": "latest",
-		"vite": "latest"
+		"vite": "^8.0.8"
 	}
 }
