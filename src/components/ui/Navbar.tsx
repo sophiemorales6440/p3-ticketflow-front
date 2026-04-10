@@ -2,10 +2,23 @@ import MailIcon from "@mui/icons-material/Mail";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, IconButton, InputAdornment, TextField } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NotificationPanel from "./NotificationPanel";
 import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
+	const navigate = useNavigate();
+	const [search, setSearch] = useState("");
+
+	const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key !== "Enter") return;
+		const id = search.trim();
+		if (!id || Number.isNaN(Number(id))) return;
+		navigate(`/tickets/${id}/edit`);
+		setSearch("");
+	};
+
 	return (
 		<Box
 			sx={{
@@ -20,6 +33,9 @@ export default function Navbar() {
 			<TextField
 				size="small"
 				placeholder="Rechercher un ticket..."
+				value={search}
+				onChange={(e) => setSearch(e.target.value)}
+				onKeyDown={handleSearch}
 				sx={{
 					width: 320,
 					"& .MuiOutlinedInput-root": {
