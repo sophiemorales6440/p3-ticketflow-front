@@ -13,6 +13,7 @@ import TicketForm from "./pages/admin/TicketForm";
 import Tickets from "./pages/admin/Tickets";
 import Users from "./pages/admin/Users";
 import ClientDashboard from "./pages/clients/ClientDashboard";
+import ProfilePage from "./pages/profile/ProfilePage";
 import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
 import TechnicienDashboard from "./pages/technicien/TechnicienDashboard";
@@ -40,6 +41,7 @@ function AppRoutes() {
 				<Route path="/users" element={<Users />} />
 				<Route path="/technicians" element={<Technicians />} />
 				<Route path="/categories" element={<Categories />} />
+				<Route path="/profile" element={<ProfilePage />} />
 				<Route path="/admin/dashboard" element={<Dashboard />} />
 				<Route path="/technician/dashboard" element={<TechnicienDashboard />} />
 				<Route path="/client/dashboard" element={<ClientDashboard />} />
