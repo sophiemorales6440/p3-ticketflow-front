@@ -1,4 +1,3 @@
-// src/pages/admin/AttachmentsPanel.tsx
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -58,6 +57,9 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 			if (!files || files.length === 0) return;
 			const file = files[0];
 
+			const formData = new FormData();
+			formData.append("file", file);
+
 			void (async () => {
 				setUploading(true);
 				setError(null);
@@ -66,11 +68,7 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 						`${import.meta.env.VITE_API_URL}/api/attachments/tickets/${ticketId}/attachments`,
 						{
 							method: "POST",
-							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify({
-								filename: file.name,
-								url: `/uploads/${file.name}`,
-							}),
+							body: formData,
 						},
 					);
 
@@ -157,9 +155,13 @@ export default function AttachmentsPanel({ ticketId }: Props) {
 						>
 							<ListItemText
 								primary={
-									<span style={{ color: "#1976d2", fontWeight: 800 }}>
+									<a
+										style={{ color: "#1976d2", fontWeight: 800 }}
+										href={att.url}
+										download={att.filename}
+									>
 										{att.filename}
-									</span>
+									</a>
 								}
 								secondary={
 									att.createdAt
