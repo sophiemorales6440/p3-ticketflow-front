@@ -228,7 +228,7 @@ export default function Login() {
 						display="block"
 						mt={2}
 					>
-						Don't have an account?{" "}
+						Pas encore de compte?{" "}
 						<Typography
 							component="span"
 							variant="caption"
@@ -237,7 +237,7 @@ export default function Login() {
 							sx={{ cursor: "pointer", textDecoration: "underline" }}
 							onClick={() => navigate("/register")}
 						>
-							Register to You
+							Créer un compte
 						</Typography>
 					</Typography>
 				</Paper>

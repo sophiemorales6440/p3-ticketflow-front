@@ -32,9 +32,9 @@
 		"@types/multer": "^2.1.0",
 		"@types/react": "latest",
 		"@types/react-dom": "latest",
-		"@vitejs/plugin-react": "latest",
+		"@vitejs/plugin-react": "^4.3.0",
 		"husky": "^9.1.7",
 		"typescript": "latest",
-		"vite": "latest"
+		"vite": "^6.3.5"
 	}
 }

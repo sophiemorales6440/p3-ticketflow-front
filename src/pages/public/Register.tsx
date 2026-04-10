@@ -55,6 +55,30 @@ export default function Register() {
 		}
 		setErrors({});
 		setIsSubmitting(true);
+		try {
+			const response = await fetch(
+				`${import.meta.env.VITE_API_URL}/api/auth/signup`,
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						firstname,
+						lastname,
+						email,
+						password,
+					}),
+				},
+			);
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.message || "Registration failed");
+			}
+			navigate("/login");
+		} catch (error) {
+			console.error("Registration error:", error);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
