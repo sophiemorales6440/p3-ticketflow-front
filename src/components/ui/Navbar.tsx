@@ -2,7 +2,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Badge, Box, IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+	Badge,
+	Box,
+	IconButton,
+	InputAdornment,
+	TextField,
+} from "@mui/material";
 import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
