@@ -60,7 +60,10 @@ export default function Navbar() {
 						<NotificationsIcon />
 					</Badge>
 				</IconButton>
-				<IconButton sx={{ color: "white", opacity: 0.7 }}>
+				<IconButton
+					sx={{ color: "white", opacity: 0.7 }}
+					onClick={() => window.open("mailto:ticketflowsupport@gmail.com")}
+				>
 					<MailIcon />
 				</IconButton>
 				<IconButton sx={{ color: "white", opacity: 0.7 }}>
