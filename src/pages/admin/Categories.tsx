@@ -83,8 +83,8 @@ export default function Categories() {
 								sx={{
 									width: "70%",
 									fontWeight: "bold",
-									bgcolor: "primary.main",
-									color: "white",
+									bgcolor: "#e8f0fe",
+									color: "text.secondary",
 									textAlign: "center",
 								}}
 							>
@@ -93,8 +93,8 @@ export default function Categories() {
 							<TableCell
 								sx={{
 									fontWeight: "bold",
-									bgcolor: "primary.main",
-									color: "white",
+									bgcolor: "#e8f0fe",
+									color: "text.secondary",
 									textAlign: "center",
 								}}
 							>
