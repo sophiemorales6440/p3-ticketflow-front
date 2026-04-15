@@ -59,17 +59,22 @@ export default function Categories() {
 					direction="row"
 					spacing={2}
 					alignItems="center"
-					justifyContent="space-between"
-					marginY={2}
-					sx={{ mt: 5 }}
+					sx={{ mt: 3, mb: 2 }}
 				>
 					<TextField
 						label="Nom de la catégorie"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						sx={{ mt: 2, width: "70%" }}
+						size="small"
+						sx={{ flex: 1, bgcolor: "white", borderRadius: 1 }}
 					/>
-					<Button type="submit" variant="contained" sx={{ width: "30%" }}>
+					<Button
+						type="submit"
+						variant="contained"
+						color="primary"
+						size="small"
+						sx={{ textTransform: "none" }}
+					>
 						Ajouter
 					</Button>
 				</Stack>
