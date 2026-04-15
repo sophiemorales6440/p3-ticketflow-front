@@ -1,5 +1,6 @@
 import { Button, Stack, TableCell, TableRow, TextField } from "@mui/material";
 import { useState } from "react";
+import { fetchWithToken } from "../../utils/api";
 
 interface CategoryType {
 	id: number;
@@ -16,7 +17,7 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 		setIsEdit(true);
 	};
 	const handleDelete = async () => {
-		const response = await fetch(
+		const response = await fetchWithToken(
 			`${import.meta.env.VITE_API_URL}/api/categories/${category.id}`,
 			{
 				method: "DELETE",
@@ -31,7 +32,7 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 	};
 	const handleSave = async () => {
 		const newData = { id: category.id, name: name || category.name };
-		const response = await fetch(
+		const response = await fetchWithToken(
 			`${import.meta.env.VITE_API_URL}/api/categories/${category.id}`,
 			{
 				method: "PUT",
