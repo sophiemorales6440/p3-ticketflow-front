@@ -65,14 +65,14 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 				{isEdit ? (
 					<Stack direction="row" spacing={2}>
 						<Button variant="contained" onClick={handleSave}>
-							Save
+							Enregistrer
 						</Button>
 						<Button
 							variant="outlined"
 							color="error"
 							onClick={() => setIsEdit(false)}
 						>
-							Cancel
+							Annuler
 						</Button>
 					</Stack>
 				) : (
