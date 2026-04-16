@@ -126,6 +126,12 @@ export default function Login() {
 								},
 								"& .MuiInputLabel-root": { color: "rgba(255,255,255,0.7)" },
 								"& .MuiInputLabel-root.Mui-focused": { color: "white" },
+								"& .MuiInputLabel-shrink": {
+									backgroundColor: "primary.main",
+									paddingLeft: "4px",
+									paddingRight: "4px",
+									borderRadius: "2px",
+								},
 							}}
 							value={email}
 							onChange={(event) => setEmail(event.target.value)}
@@ -155,6 +161,12 @@ export default function Login() {
 								},
 								"& .MuiInputLabel-root": { color: "rgba(255,255,255,0.7)" },
 								"& .MuiInputLabel-root.Mui-focused": { color: "white" },
+								"& .MuiInputLabel-shrink": {
+									backgroundColor: "primary.main",
+									paddingLeft: "4px",
+									paddingRight: "4px",
+									borderRadius: "2px",
+								},
 							}}
 							InputProps={{
 								endAdornment: (
