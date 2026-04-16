@@ -61,7 +61,17 @@ export default function Login() {
 			}}
 		>
 			{/* Logo */}
-			<Typography variant="h3" fontWeight={800} color="white" letterSpacing={3}>
+			<Typography
+				variant="h3"
+				fontWeight={800}
+				letterSpacing={3}
+				sx={{
+					background: "linear-gradient(90deg, #ffffff 0%, #00e5ff 100%)",
+					WebkitBackgroundClip: "text",
+					WebkitTextFillColor: "transparent",
+					filter: "drop-shadow(0 0 16px rgba(0, 229, 255, 0.7))",
+				}}
+			>
 				TICKETFLOW
 			</Typography>
 
