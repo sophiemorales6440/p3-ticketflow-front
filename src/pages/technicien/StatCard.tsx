@@ -10,7 +10,14 @@ interface Props {
 	active?: boolean;
 }
 
-export default function StatCard({ label, value, color, icon: Icon, onClick, active }: Props) {
+export default function StatCard({
+	label,
+	value,
+	color,
+	icon: Icon,
+	onClick,
+	active,
+}: Props) {
 	return (
 		<Paper
 			elevation={active ? 4 : 0}
@@ -23,12 +30,17 @@ export default function StatCard({ label, value, color, icon: Icon, onClick, act
 				borderLeft: `4px solid ${color}`,
 				cursor: onClick ? "pointer" : "default",
 				transition: "all 0.2s",
-					"&:hover": onClick ? { boxShadow: 3} : {},
-				}}
-			
+				"&:hover": onClick ? { boxShadow: 3 } : {},
+			}}
 		>
-			<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-			<Box>
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "flex-start",
+				}}
+			>
+				<Box>
 					<Typography variant="body2" color="text.secondary" mb={0.5}>
 						{label}
 					</Typography>
@@ -36,9 +48,10 @@ export default function StatCard({ label, value, color, icon: Icon, onClick, act
 						{value}
 					</Typography>
 				</Box>
-				<Icon sx={{ color, opacity: active ? 0.8 : 0.4, fontSize: 36, mt: 0.5 }} />
+				<Icon
+					sx={{ color, opacity: active ? 0.8 : 0.4, fontSize: 36, mt: 0.5 }}
+				/>
 			</Box>
 		</Paper>
 	);
 }
-	

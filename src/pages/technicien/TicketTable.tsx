@@ -174,7 +174,13 @@ export default function TicketTable({
 									bgcolor:
 										ticket.technician_id == null || ticket.technician_id === 0
 											? "rgba(239, 68, 68, 0.20)"
-											: "inherit",
+											: ticket.status === "in_progress"
+												? "rgba(59, 130, 246, 0.20)"
+												: ticket.status === "open"
+													? "rgba(234, 179, 8, 0.20)"
+													: ticket.status === "resolved"
+														? "rgba(34, 197, 94, 0.20)"
+														: "inherit",
 								}}
 							>
 								<TableCell

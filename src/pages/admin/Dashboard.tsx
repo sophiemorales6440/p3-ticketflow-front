@@ -134,11 +134,10 @@ export default function Dashboard() {
 	const filteredTickets = activeFilter
 		? activeFilter === "late"
 			? tickets.filter((t) => {
-					const days = (Date.now() - new Date(t.created_at).getTime()) / 86400000;
-					return (
-						days > 3 && t.status !== "resolved" && t.status !== "closed"
-					);
-			  })
+					const days =
+						(Date.now() - new Date(t.created_at).getTime()) / 86400000;
+					return days > 3 && t.status !== "resolved" && t.status !== "closed";
+				})
 			: tickets.filter((t) => t.status === activeFilter)
 		: tickets;
 
@@ -395,6 +394,15 @@ export default function Dashboard() {
 								</TableCell>
 							</TableRow>
 						))}
+						{technicians.length === 0 && (
+							<TableRow>
+								<TableCell colSpan={3} align="center">
+									<Typography variant="body2" color="text.secondary">
+										Aucun technicien trouvé
+									</Typography>
+								</TableCell>
+							</TableRow>
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>
