@@ -29,12 +29,18 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.6",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.1",
 		"@types/multer": "^2.1.0",
 		"@types/react": "latest",
 		"@types/react-dom": "latest",
 		"@vitejs/plugin-react": "^4.3.0",
+		"@vitest/coverage-v8": "^4.1.4",
 		"husky": "^9.1.7",
+		"jsdom": "^29.0.2",
 		"typescript": "latest",
-		"vite": "^6.3.5"
+		"vite": "^6.3.5",
+		"vitest": "^4.1.4"
 	}
 }
