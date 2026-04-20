@@ -1,3 +1,7 @@
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import WarningIcon from "@mui/icons-material/Warning";
 import {
 	Drawer,
 	Table,
@@ -58,16 +62,19 @@ export default function Dashboard() {
 			label: "Tickets en cours",
 			value: tickets.filter((t) => t.status === "in_progress").length,
 			color: "#3b82f6",
+			icon: ConfirmationNumberIcon,
 		},
 		{
 			label: "En attente",
 			value: tickets.filter((t) => t.status === "open").length,
 			color: "#f59e0b",
+			icon: HourglassEmptyIcon,
 		},
 		{
 			label: "Résolus",
 			value: tickets.filter((t) => t.status === "resolved").length,
 			color: "#22c55e",
+			icon: CheckCircleIcon,
 		},
 		{
 			label: "Tickets en retard",
@@ -76,6 +83,7 @@ export default function Dashboard() {
 				return days > 3 && t.status !== "resolved" && t.status !== "closed";
 			}).length,
 			color: "#ef4444",
+			icon: WarningIcon,
 		},
 	];
 	const technicians = users.filter((u) => u.role === "technician");
@@ -138,6 +146,7 @@ export default function Dashboard() {
 						label={stat.label}
 						value={stat.value}
 						color={stat.color}
+						icon={stat.icon}
 					/>
 				))}
 			</Box>
