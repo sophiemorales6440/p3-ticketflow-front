@@ -185,6 +185,15 @@ export default function Dashboard() {
 							<Legend />
 						</PieChart>
 					</ResponsiveContainer>
+					<Typography
+						variant="caption"
+						color="text.secondary"
+						display="block"
+						textAlign="center"
+						mt={1}
+					>
+						{stats.reduce((acc, s) => acc + s.value, 0)} tickets
+					</Typography>
 				</Box>
 
 				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3, minWidth: 0 }}>
@@ -200,6 +209,12 @@ export default function Dashboard() {
 						<PieChart>
 							<Pie
 								data={[
+									{
+										label: "Critique",
+										value: tickets.filter((t) => t.priority === "critical")
+											.length,
+										color: "#dc2626",
+									},
 									{
 										label: "Haut",
 										value: tickets.filter((t) => t.priority === "high").length,
@@ -224,6 +239,7 @@ export default function Dashboard() {
 								outerRadius={70}
 							>
 								{[
+									{ label: "Critique", color: "#dc2626" },
 									{ label: "Haut", color: "#ef4444" },
 									{ label: "Moyen", color: "#f59e0b" },
 									{ label: "Bas", color: "#22c55e" },
@@ -235,6 +251,15 @@ export default function Dashboard() {
 							<Legend />
 						</PieChart>
 					</ResponsiveContainer>
+					<Typography
+						variant="caption"
+						color="text.secondary"
+						display="block"
+						textAlign="center"
+						mt={1}
+					>
+						{tickets.length} tickets
+					</Typography>
 				</Box>
 				<Box sx={{ bgcolor: "#ffffff", borderRadius: 2, p: 3, minWidth: 0 }}>
 					<Typography
