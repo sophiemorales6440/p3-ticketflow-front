@@ -36,14 +36,23 @@ export default function AuthProvider({
 
 		if (token) {
 			try {
-				const decoded = jwtDecode<User>(token);
-				setUser({
-					id: decoded.id,
-					email: decoded.email,
-					role: decoded.role,
-					firstname: decoded.firstname,
-					lastname: decoded.lastname,
-				});
+				const decoded = jwtDecode<User & { exp?: number }>(token);
+
+				// Vérifier si le token est expiré
+				const isExpired = decoded.exp ? decoded.exp * 1000 < Date.now() : false;
+
+				if (isExpired) {
+					console.warn("Token expiré, déconnexion automatique.");
+					localStorage.removeItem("token");
+				} else {
+					setUser({
+						id: decoded.id,
+						email: decoded.email,
+						role: decoded.role,
+						firstname: decoded.firstname,
+						lastname: decoded.lastname,
+					});
+				}
 			} catch (error) {
 				console.error("Token invalide :", error);
 				localStorage.removeItem("token");
