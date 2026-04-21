@@ -14,7 +14,6 @@ import { fetchWithToken } from "../../utils/api";
 export default function TicketForm() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [priority, setPriority] = useState("");
 	const [category_id, setCategoryId] = useState("");
 	const [attachment, setAttachment] = useState<File | null>(null);
 	const navigate = useNavigate();
@@ -23,7 +22,6 @@ export default function TicketForm() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		// Étape 1 : créer le ticket
 		const res = await fetchWithToken(
 			`${import.meta.env.VITE_API_URL}/api/tickets`,
 			{
@@ -32,9 +30,9 @@ export default function TicketForm() {
 				body: JSON.stringify({
 					title,
 					description,
-					priority,
 					category_id,
 					status: "open",
+					priority: "medium", // priorité par défaut, définie par l'admin/tech
 					client_id: user?.id,
 					technician_id: null,
 				}),
@@ -48,7 +46,6 @@ export default function TicketForm() {
 
 		const ticket = await res.json();
 
-		// Étape 2 : uploader le fichier si présent
 		if (attachment && ticket.id) {
 			const formData = new FormData();
 			formData.append("file", attachment);
@@ -62,7 +59,6 @@ export default function TicketForm() {
 			);
 
 			if (!uploadRes.ok) {
-				// Ticket créé mais upload échoué — on prévient sans bloquer
 				window.alert("Ticket créé mais l'upload du fichier a échoué");
 				navigate("/client/dashboard");
 				return;
@@ -87,6 +83,7 @@ export default function TicketForm() {
 				<TextField
 					label="Titre"
 					fullWidth
+					required
 					sx={{ mb: 2 }}
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
@@ -95,6 +92,7 @@ export default function TicketForm() {
 				<TextField
 					label="Description"
 					fullWidth
+					required
 					multiline
 					rows={4}
 					sx={{ mb: 2 }}
@@ -113,22 +111,9 @@ export default function TicketForm() {
 				/>
 
 				<TextField
-					label="Priorité"
-					fullWidth
-					select
-					sx={{ mb: 2 }}
-					value={priority}
-					onChange={(e) => setPriority(e.target.value)}
-				>
-					<MenuItem value="low">Basse</MenuItem>
-					<MenuItem value="medium">Moyenne</MenuItem>
-					<MenuItem value="high">Haute</MenuItem>
-					<MenuItem value="critical">Critique</MenuItem>
-				</TextField>
-
-				<TextField
 					label="Catégorie"
 					fullWidth
+					required
 					select
 					sx={{ mb: 2 }}
 					value={category_id}
