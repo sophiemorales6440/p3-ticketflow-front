@@ -20,6 +20,7 @@ export default function TicketEdit() {
 	const { id } = useParams();
 	const { user } = useAuth();
 
+	const isClient = user?.role === "client";
 	const [title, setTitle] = useState("");
 	const [status, setStatus] = useState("");
 	const [description, setDescription] = useState("");
@@ -125,30 +126,34 @@ export default function TicketEdit() {
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 						/>
-						<TextField
-							select
-							label="Statut"
-							fullWidth
-							value={status}
-							onChange={(e) => setStatus(e.target.value)}
-						>
-							<MenuItem value="open">Ouvert</MenuItem>
-							<MenuItem value="in_progress">En cours</MenuItem>
-							<MenuItem value="resolved">Résolu</MenuItem>
-							<MenuItem value="closed">Fermé</MenuItem>
-						</TextField>
-						<TextField
-							select
-							label="Priorité"
-							fullWidth
-							value={priority}
-							onChange={(e) => setPriority(e.target.value)}
-						>
-							<MenuItem value="low">Basse</MenuItem>
-							<MenuItem value="medium">Moyenne</MenuItem>
-							<MenuItem value="high">Haute</MenuItem>
-							<MenuItem value="critical">Critique</MenuItem>
-						</TextField>
+						{!isClient && (
+							<>
+								<TextField
+									select
+									label="Statut"
+									fullWidth
+									value={status}
+									onChange={(e) => setStatus(e.target.value)}
+								>
+									<MenuItem value="open">Ouvert</MenuItem>
+									<MenuItem value="in_progress">En cours</MenuItem>
+									<MenuItem value="resolved">Résolu</MenuItem>
+									<MenuItem value="closed">Fermé</MenuItem>
+								</TextField>
+								<TextField
+									select
+									label="Priorité"
+									fullWidth
+									value={priority}
+									onChange={(e) => setPriority(e.target.value)}
+								>
+									<MenuItem value="low">Basse</MenuItem>
+									<MenuItem value="medium">Moyenne</MenuItem>
+									<MenuItem value="high">Haute</MenuItem>
+									<MenuItem value="critical">Critique</MenuItem>
+								</TextField>
+							</>
+						)}
 						<TextField
 							select
 							label="Catégorie"
