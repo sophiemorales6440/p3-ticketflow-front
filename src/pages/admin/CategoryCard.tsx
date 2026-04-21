@@ -1,4 +1,15 @@
-import { Button, Stack, TableCell, TableRow, TextField } from "@mui/material";
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Stack,
+	TableCell,
+	TableRow,
+	TextField,
+} from "@mui/material";
 import { useState } from "react";
 import { fetchWithToken } from "../../utils/api";
 
@@ -13,6 +24,7 @@ interface Props {
 const Category = ({ category, SetIsUpdate }: Props) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [name, setName] = useState("");
+	const [openConfirm, setOpenConfirm] = useState(false);
 	const handleEdit = () => {
 		setIsEdit(true);
 	};
@@ -90,7 +102,7 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 						<Button
 							variant="outlined"
 							color="error"
-							onClick={handleDelete}
+							onClick={() => setOpenConfirm(true)}
 							sx={{ textTransform: "none" }}
 						>
 							Supprimer
@@ -98,6 +110,29 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 					</Stack>
 				)}
 			</TableCell>
+			<Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
+				<DialogTitle>Confirmer la suppression</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Êtes-vous sûr de vouloir supprimer cette catégorie ?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => setOpenConfirm(false)} color="primary">
+						Annuler
+					</Button>
+					<Button
+						color="error"
+						variant="contained"
+						onClick={() => {
+							handleDelete();
+							setOpenConfirm(false);
+						}}
+					>
+						Supprimer
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</TableRow>
 	);
 };
