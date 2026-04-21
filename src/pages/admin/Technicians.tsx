@@ -53,7 +53,7 @@ export default function Technicians() {
 				),
 			)
 			.catch((error) => console.error(error));
-	});
+	}, []);
 
 	useEffect(() => {
 		if (!selectedTechnician) return;
@@ -72,18 +72,66 @@ export default function Technicians() {
 			user.email.toLowerCase().includes(search.toLowerCase()),
 	);
 
-	const statusColor = (status: string) => {
-		if (status === "open") return "info";
-		if (status === "closed") return "success";
-		if (status === "pending") return "warning";
-		return "default";
+	const STATUS_LABELS: Record<string, string> = {
+		open: "En attente",
+		in_progress: "En cours",
+		resolved: "Résolu",
+		closed: "Fermé",
 	};
 
-	const priorityColor = (priority: string) => {
-		if (priority === "high") return "error";
-		if (priority === "medium") return "warning";
-		if (priority === "low") return "success";
-		return "default";
+	const PRIORITY_LABELS: Record<string, string> = {
+		low: "Basse",
+		medium: "Moyenne",
+		high: "Haute",
+		critical: "Critique",
+	};
+
+	const statusColor = (
+		status: string,
+	):
+		| "default"
+		| "primary"
+		| "secondary"
+		| "error"
+		| "info"
+		| "success"
+		| "warning" => {
+		switch (status) {
+			case "open":
+				return "warning";
+			case "in_progress":
+				return "info";
+			case "resolved":
+				return "success";
+			case "closed":
+				return "default";
+			default:
+				return "default";
+		}
+	};
+
+	const priorityColor = (
+		priority: string,
+	):
+		| "default"
+		| "primary"
+		| "secondary"
+		| "error"
+		| "info"
+		| "success"
+		| "warning" => {
+		switch (priority) {
+			case "low":
+				return "default";
+			case "medium":
+				return "info";
+			case "high":
+				return "warning";
+			case "critical":
+				return "error";
+			default:
+				return "default";
+		}
 	};
 
 	return (
@@ -109,41 +157,54 @@ export default function Technicians() {
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
 			/>
+			<Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+				{filteredTechnicians.length} technicien
+				{filteredTechnicians.length > 1 ? "s" : ""}
+			</Typography>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
-						<TableRow sx={{ bgcolor: "#2f5071" }}>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+						<TableRow sx={{ bgcolor: "#e8f0fe" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Prénom
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Nom
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Email
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Role
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
-								Modifier
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
+								Tickets assignés
 							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{filteredTechnicians.map((technician) => (
-							<TableRow key={technician.id}>
-								<TableCell>{technician.firstname}</TableCell>
-								<TableCell>{technician.lastname}</TableCell>
-								<TableCell>{technician.email}</TableCell>
-								<TableCell>{technician.role}</TableCell>
+						{filteredTechnicians.map((technicien) => (
+							<TableRow key={technicien.id} hover>
+								<TableCell>{technicien.firstname}</TableCell>
+								<TableCell>{technicien.lastname}</TableCell>
+								<TableCell>{technicien.email}</TableCell>
+								<TableCell>Technicien</TableCell>
 								<TableCell>
-									<IconButton onClick={() => setSelectedTechnician(technician)}>
+									<IconButton onClick={() => setSelectedTechnician(technicien)}>
 										<Eye size={18} />
 									</IconButton>
 								</TableCell>
 							</TableRow>
 						))}
+						{filteredTechnicians.length === 0 && (
+							<TableRow>
+								<TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+									<Typography variant="body2" color="text.secondary">
+										Aucun technicien trouvé
+									</Typography>
+								</TableCell>
+							</TableRow>
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>
@@ -189,12 +250,12 @@ export default function Technicians() {
 
 							<Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
 								<Chip
-									label={ticket.status}
+									label={STATUS_LABELS[ticket.status] ?? ticket.status}
 									size="small"
 									color={statusColor(ticket.status)}
 								/>
 								<Chip
-									label={ticket.priority}
+									label={PRIORITY_LABELS[ticket.priority] ?? ticket.priority}
 									size="small"
 									color={priorityColor(ticket.priority)}
 								/>
