@@ -61,11 +61,11 @@ export default function Tickets() {
 	}, []);
 
 	return (
-		<Box sx={{ maxWidth: 960, mx: "auto", px: 3, py: 5 }}>
+		<Box sx={{ p: { xs: 2, sm: 3 } }}>
 			<Typography variant="h5" fontWeight={600} gutterBottom>
 				Tickets
 			</Typography>
-			<Typography variant="body2" color="white+" sx={{ mb: 3 }}>
+			<Typography variant="body2" color="textSecondary" sx={{ mb: 3 }}>
 				{ticket.length} ticket{ticket.length > 1 ? "s" : ""}
 			</Typography>
 
@@ -76,7 +76,7 @@ export default function Tickets() {
 			>
 				<Table>
 					<TableHead>
-						<TableRow>
+						<TableRow sx={{ bgcolor: "#e8f0fe" }}>
 							{[
 								"ID",
 								"Titre",
@@ -92,7 +92,7 @@ export default function Tickets() {
 										fontWeight: 600,
 										textTransform: "uppercase",
 										letterSpacing: "0.07em",
-										color: "text.disabled",
+										color: "text.secondary",
 									}}
 								>
 									{h}
