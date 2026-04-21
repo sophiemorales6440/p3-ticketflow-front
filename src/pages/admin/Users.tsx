@@ -132,6 +132,15 @@ export default function Users() {
 								SetIsUpdate={SetIsUpdate}
 							/>
 						))}
+						{(activeTab === 0 ? staffUsers : clientsUsers).length === 0 && (
+							<TableRow>
+								<TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+									<Typography variant="body2" color="text.secondary">
+										Aucun utilisateur trouvé
+									</Typography>
+								</TableCell>
+							</TableRow>
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>
