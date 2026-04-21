@@ -59,7 +59,12 @@ export default function Navbar() {
 
 			<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
 				<NotificationPanel />
-				<IconButton sx={{ color: "white", opacity: 0.7 }}>
+				<IconButton
+					sx={{ color: "white", opacity: 0.7 }}
+					onClick={() => {
+						window.location.href = "mailto:ticketflowsupport@gmail.com";
+					}}
+				>
 					<MailIcon />
 				</IconButton>
 				<IconButton sx={{ color: "white", opacity: 0.7 }}>
