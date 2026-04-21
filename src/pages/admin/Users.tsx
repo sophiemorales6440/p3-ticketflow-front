@@ -73,30 +73,52 @@ export default function Users() {
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
 			/>
+			<Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+				{activeTab === 0 ? staffUsers.length : clientsUsers.length} utilisateur
+				{(activeTab === 0 ? staffUsers.length : clientsUsers.length) > 1
+					? "s"
+					: ""}
+			</Typography>
 			<TableContainer component={Paper}>
 				<Tabs
 					value={activeTab}
 					onChange={(_, newValue) => setActiveTab(newValue)}
+					sx={{
+						borderBottom: 1,
+						borderColor: "divider",
+						mb: 0,
+						"& .MuiTab-root": {
+							textTransform: "none",
+							fontWeight: 600,
+							fontSize: 14,
+						},
+						"& .Mui-selected": {
+							color: "#2f5071",
+						},
+						"& .MuiTabs-indicator": {
+							backgroundColor: "#2f5071",
+						},
+					}}
 				>
-					<Tab label="Staff" />
-					<Tab label="Nos Clients" />
+					<Tab label={`Staff (${staffUsers.length})`} />
+					<Tab label={`Nos Clients(${clientsUsers.length})`} />
 				</Tabs>
 				<Table>
 					<TableHead>
-						<TableRow sx={{ bgcolor: "#2f5071" }}>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+						<TableRow sx={{ bgcolor: "#e8f0fe" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Prénom
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Nom
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Email
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Role
 							</TableCell>
-							<TableCell sx={{ fontWeight: "bold", color: "white" }}>
+							<TableCell sx={{ fontWeight: "bold", color: "text.secondary" }}>
 								Modifier
 							</TableCell>
 						</TableRow>
@@ -110,6 +132,15 @@ export default function Users() {
 								SetIsUpdate={SetIsUpdate}
 							/>
 						))}
+						{(activeTab === 0 ? staffUsers : clientsUsers).length === 0 && (
+							<TableRow>
+								<TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+									<Typography variant="body2" color="text.secondary">
+										Aucun utilisateur trouvé
+									</Typography>
+								</TableCell>
+							</TableRow>
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>

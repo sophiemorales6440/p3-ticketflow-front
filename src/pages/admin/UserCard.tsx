@@ -1,4 +1,10 @@
 import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 	IconButton,
 	MenuItem,
 	TableCell,
@@ -30,6 +36,7 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 	const [lastname, setLastname] = useState("");
 	const [email, setEmail] = useState("");
 	const [role, setRole] = useState("");
+	const [openConfirm, setOpenConfirm] = useState(false);
 
 	const handleEdit = () => {
 		console.log(user);
@@ -79,6 +86,11 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 			setLastname("");
 			setEmail("");
 		}
+	};
+	const ROLE_LABELS: Record<string, string> = {
+		admin: "Administrateur",
+		technician: "Technicien",
+		client: "Client",
 	};
 
 	return (
@@ -131,7 +143,7 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 			<TableCell>
 				{isEdit ? (
 					user.role === "client" ? (
-						user.role
+						(ROLE_LABELS[user.role] ?? user.role)
 					) : (
 						<TextField
 							select
@@ -147,7 +159,7 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 						</TextField>
 					)
 				) : (
-					user.role
+					(ROLE_LABELS[user.role] ?? user.role)
 				)}
 			</TableCell>
 
@@ -164,10 +176,27 @@ const User = ({ user, setCurrentUser, SetIsUpdate }: Props) => {
 				<IconButton color="info" onClick={() => setCurrentUser(user)}>
 					<UserCheck size={18} />
 				</IconButton>
-				<IconButton color="error" onClick={handleDelete}>
+				<IconButton color="error" onClick={() => setOpenConfirm(true)}>
 					<Trash2 size={18} />
 				</IconButton>
 			</TableCell>
+			<Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
+				<DialogTitle>Confirmer la suppression</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action
+						est irréversible.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => setOpenConfirm(false)} color="primary">
+						Annuler
+					</Button>
+					<Button onClick={handleDelete} color="error">
+						Supprimer
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</TableRow>
 	);
 };
