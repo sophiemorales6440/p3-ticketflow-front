@@ -79,7 +79,9 @@ export default function Categories() {
 					</Button>
 				</Stack>
 			</form>
-
+			<Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+				{categories.length} catégorie{categories.length > 1 ? "s" : ""}
+			</Typography>
 			<TableContainer component={Paper} sx={{ mt: 2 }}>
 				<Table>
 					<TableHead>
@@ -115,6 +117,13 @@ export default function Categories() {
 								SetIsUpdate={SetIsUpdate}
 							/>
 						))}
+						{categories.length === 0 && (
+							<TableRow>
+								<TableCell colSpan={2} align="center" sx={{ py: 4 }}>
+									Aucune catégorie disponible.
+								</TableCell>
+							</TableRow>
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>
