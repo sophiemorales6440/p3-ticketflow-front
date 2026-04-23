@@ -1,6 +1,4 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -11,16 +9,6 @@ import Typography from "@mui/material/Typography";
 // ─── Config des réseaux sociaux ───────────────────────────────────────────────
 
 const SOCIAL_LINKS = [
-	{
-		icon: <GitHubIcon fontSize="small" />,
-		href: "https://github.com/",
-		label: "GitHub",
-	},
-	{
-		icon: <LinkedInIcon fontSize="small" />,
-		href: "https://linkedin.com/",
-		label: "LinkedIn",
-	},
 	{
 		icon: <TwitterIcon fontSize="small" />,
 		href: "https://twitter.com/",

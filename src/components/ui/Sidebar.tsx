@@ -1,7 +1,6 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import CategoryIcon from "@mui/icons-material/Category";
-import ChatIcon from "@mui/icons-material/Chat";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import EngineeringIcon from "@mui/icons-material/Engineering";
@@ -33,7 +32,7 @@ const TECHNICIAN_ITEMS: NavItem[] = [
 	},
 	{ label: "Tickets", icon: <ConfirmationNumberIcon />, path: "/tickets" },
 	{ label: "Historique", icon: <HistoryIcon />, path: "/technician/history" },
-	{ label: "Commentaires", icon: <ChatIcon />, path: "/technician/comments" },
+	//{ label: "Commentaires", icon: <ChatIcon />, path: "/technician/comments" },
 ];
 
 const CLIENT_ITEMS: NavItem[] = [
