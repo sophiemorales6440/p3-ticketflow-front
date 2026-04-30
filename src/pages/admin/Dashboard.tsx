@@ -219,7 +219,7 @@ export default function Dashboard() {
 					>
 						Répartition par statut
 					</Typography>
-					<ResponsiveContainer width="100%" height={200}>
+					<ResponsiveContainer width="100%" height={250}>
 						<PieChart>
 							<Pie
 								data={stats}
@@ -227,7 +227,9 @@ export default function Dashboard() {
 								nameKey="label"
 								cx="50%"
 								cy="50%"
-								outerRadius={70}
+								outerRadius={55}
+								label={({ name, value }) => `${name}: ${value}`}
+								labelLine={true}
 							>
 								{stats.map((stat) => (
 									<Cell key={stat.label} fill={stat.color} />
@@ -288,7 +290,9 @@ export default function Dashboard() {
 								nameKey="label"
 								cx="50%"
 								cy="50%"
-								outerRadius={70}
+								outerRadius={55}
+								label={({ name, value }) => `${name}: ${value}`}
+								labelLine={true}
 							>
 								{[
 									{ label: "Critique", color: "#dc2626" },
