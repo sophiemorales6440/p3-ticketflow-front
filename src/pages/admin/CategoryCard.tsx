@@ -21,7 +21,7 @@ interface Props {
 	category: CategoryType;
 	SetIsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const Category = ({ category, SetIsUpdate }: Props) => {
+const CategoryCard = ({ category, SetIsUpdate }: Props) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [name, setName] = useState("");
 	const [openConfirm, setOpenConfirm] = useState(false);
@@ -137,4 +137,4 @@ const Category = ({ category, SetIsUpdate }: Props) => {
 	);
 };
 
-export default Category;
+export default CategoryCard;

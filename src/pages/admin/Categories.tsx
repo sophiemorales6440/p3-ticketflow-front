@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { fetchWithToken } from "../../utils/api";
-import Category from "./CategoryCard";
+import CategoryCard from "./CategoryCard";
 
 interface CategoryType {
 	id: number;
@@ -111,7 +111,7 @@ export default function Categories() {
 					</TableHead>
 					<TableBody>
 						{categories.map((category) => (
-							<Category
+							<CategoryCard
 								key={category.id}
 								category={category}
 								SetIsUpdate={SetIsUpdate}
